@@ -65,7 +65,9 @@ export function verifyCleanOriginalGitWorktree(root){
     race_free_execution_attested:false});
 }
 
-/** Use the same sanitized Git environment for HEAD as for worktree status. */
+/** Use the same sanitized Git environment for HEAD as for worktree status.
+ * @param {string} root
+ */
 export function verifyOriginalGitHead(root){
   if(typeof root!=='string'||!isAbsolute(root))fail('DIS_ORIGINAL_ROOT_INVALID');
   let canonical;try{canonical=realpathSync(root)}catch{fail('DIS_ORIGINAL_ROOT_INVALID')}
