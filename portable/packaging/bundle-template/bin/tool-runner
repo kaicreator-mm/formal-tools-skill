@@ -284,7 +284,15 @@ case "$cmd" in
     done
     ;;
   doctor)
-    if [ -n "${2:-}" ] && [ "$2" != all ]; then doctor_one "$2"; else
+    # No argument intentionally means doctor-all, but an explicitly empty
+    # argument is not an alias for all: it must fail closed.
+    if [ "$#" -gt 2 ]; then
+      echo "usage: tool-runner doctor [id|all]" >&2; exit 2
+    fi
+    if [ "$#" -eq 2 ] && [ -z "$2" ]; then
+      echo "invalid tool id: empty" >&2; exit 2
+    fi
+    if [ "$#" -eq 2 ] && [ "$2" != all ]; then doctor_one "$2"; else
       rc=0; for id in $(list_ids); do doctor_one "$id" || rc=1; done; exit $rc
     fi ;;
   verify)
