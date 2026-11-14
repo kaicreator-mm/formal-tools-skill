@@ -1,5 +1,5 @@
 {
-  "schema": "formal-tools/i24-r15-ldd-output-gate/1.0",
+  "schema": "formal-tools/i24-r15-ldd-output-gate/1.1",
   "output_label": "FORMAL_TOOLS_I24_TOOL_INTEGRATION_CONTINUE",
   "task": "#24 T4 portable doctor false-positive repair",
   "scope": "Follow-up P2 from independent review on already-merged PR79, implemented by the legal single Writer of PR86",
@@ -10,19 +10,26 @@
     "source_head_before_docs": "0aec700851fb6d15dc57ddba4199cfafa0d914df",
     "runner_path": "portable/packaging/bundle-template/bin/tool-runner",
     "old_runner_blob": "a27b66edf8d73c7d7dc83a58346543fee90f9257",
-    "new_runner_blob": "07582fcce82d840cf978577a032fac6cd8bcc843",
+    "new_runner_blob": "efb641ffe2f429754ee1ad78aa1e853c9d4005f6",
     "new_test_path": "tests/tool-runner-ldd-report.test.mjs",
-    "new_test_git_blob": "e21dd1c6ca04cd85652f1840e1e612d0f9f2fd4f"
+    "new_test_git_blob": "331b771d1dcbf1dfcb40e091b3d53f700dc3b6dc",
+    "static_elf_repair": {
+      "date": "2026-11-14",
+      "repair_base_head": "430267fea36adbd92f638eed2c9cb8c4fd274351",
+      "r15_original_runner_blob": "07582fcce82d840cf978577a032fac6cd8bcc843",
+      "r15_original_test_git_blob": "e21dd1c6ca04cd85652f1840e1e612d0f9f2fd4f"
+    }
   },
   "actual_execution": {
     "os": "Debian13 x86_64",
     "uid": 65534,
     "node": "22.16.0",
     "old_runner_control": "ldd-test 4/7 PASS and 3/7 FAIL on rc0 malformed diagnostic cases",
-    "new_runner": "doctor argument 3/3 PASS + ldd output 7/7 PASS = 10/10 PASS",
+    "new_runner": "R15 original: doctor argument 3/3 PASS + ldd output 7/7 PASS = 10/10 PASS",
     "real_nuxmv": "nuXmv 2.2.0 candidate, actual ELF+private lib doctor exit0 and version exit0",
     "bash_syntax": "PASS",
-    "native_solver_pos_neg_err_repeated": false
+    "native_solver_pos_neg_err_repeated": false,
+    "static_elf_repair_regression": "the 7 R15 originals pass unchanged plus 7 static-ELF additions: 37/37 tests (14 ldd + 3 doctor-args + 20 adjacent runner tests) PASS on Debian13 (ft-builder gcc 14.2.0, bundle node 22.16.0) as uid 65534, and on the alpine-3.24 CI agent image (node 24.21.0) 35/37 PASS with only the 2 gcc-real-compilation tests skipped (no gcc in the agent image); a real gcc -static ELF under real GNU ldd as uid 65534 gets doctor verdict OK"
   },
   "contract": {
     "failed_probe_rc_nonzero": "FAIL",
@@ -31,8 +38,40 @@
     "valid_listing_plus_warning": "FAIL",
     "missing_library": "FAIL",
     "valid_dynamic_dependency_report": "PASS",
-    "static_exact_marker": "PASS",
-    "scope": "Recognized GNU/BusyBox dynamic linker reports; reject unknown diagnostics without granting formal T4"
+    "static_elf": "PASS via ELF header only (no PT_INTERP); ldd is not consulted for static binaries",
+    "scope": "Recognized GNU/BusyBox dynamic linker reports; static ELF certified by the ELF header itself; reject unknown diagnostics without granting formal T4"
+  },
+  "static_elf_repair": {
+    "problem": "The R15 gate accepted a synthetic 'statically linked' marker that no real ldd implementation emits. Real GNU ldd on a gcc -static ELF exits 1 with stderr '\\tnot a dynamic executable', so a healthy static binary failed doctor (false negative).",
+    "fix": "ft_is_static_elf: header-based static-ELF detection (ELF magic + little-endian class check + od-parsed program header table; static = no PT_INTERP). Static ELF passes doctor without consulting ldd; dynamic ELF, non-ELF and unparseable files keep the unchanged fail-closed ldd path; private-lib symlink containment still runs for every binary before any static verdict.",
+    "real_behavior_matrix": {
+      "gnu_ldd_debian13_static": {
+        "command": "ldd static.elf",
+        "rc": 1,
+        "stdout": "",
+        "stderr": "\\tnot a dynamic executable",
+        "uid_invariant": "65534 identical to root"
+      },
+      "musl_ldso_alpine_static": {
+        "command": "ldd static.elf (musl ldso --list)",
+        "rc": 1,
+        "stdout": "",
+        "stderr": "/lib/ld-musl-x86_64.so.1: ...: Not a valid dynamic program"
+      },
+      "busybox_style_env_trace_static": {
+        "command": "LD_TRACE_LOADED_OBJECTS=1 static.elf",
+        "rc": 0,
+        "stdout": "",
+        "note": "the binary silently executes; the output is the program's own and can never certify dependency health, so no output-based gate can cover busybox static diagnosis - the ELF header is the only libc-independent arbiter"
+      },
+      "dynamic_table": {
+        "command": "ldd dynamic.elf",
+        "rc": 0,
+        "stdout": "recognized dependency table (glibc and musl forms both match the validator patterns)"
+      }
+    },
+    "probe_host": "CC-LAN200 docker: ft-builder:deb13 (gcc 14.2.0) + debian:13 + woodpecker-agent-lan200 (alpine 3.24 busybox od/ldd)",
+    "probe_date": "2026-11-14"
   },
   "durable": {
     "drive_id": "1LKl8yp-kRbJ1nyLErdzj2l0MVpT10PxQ",
