@@ -26,7 +26,8 @@
       "head": "b9e4e419e1a144c7cb1e3b8e6ccee74d50d66871",
       "finding": "P1: no-PT_INTERP incorrectly treats ET_REL and ET_DYN with DT_NEEDED missing dependency as static",
       "not_in_main": true
-    }
+    },
+    "branch_base": "88c79464bd717ad9f0ae2cdf0ee18f8c99ca2a05"
   },
   "host": {
     "os": "Debian GNU/Linux 13 (trixie)",
@@ -218,7 +219,7 @@
       },
       "fixture_contract": {
         "main_current": "POS/NEG/ERR (ERR added in this PR branch; not yet merged)",
-        "branch": "fix/i24-fast-downward-err-fixture-r19",
+        "branch": "fix/i24-fast-downward-err-fixture-r19b",
         "proposed_change": "add committed malformed PDDL ERR phase, exit wildcard + parser diagnostic",
         "err_fixture_path": "portable/verification/cases/fast-downward/err.pddl",
         "expect_before_r19_blob": "6dc4077e6e62ceca0f7cca4ace2b8563efcd9f31",
