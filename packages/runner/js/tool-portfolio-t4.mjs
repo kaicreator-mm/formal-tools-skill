@@ -2,10 +2,10 @@
  * Issue #24 T4 gateway: one capability-linked portfolio, never 23 MCP servers.
  *
  * The original 13 native operations retain their existing executable catalog.
- * Candidate tools are discoverable here, but the ONLY currently admitted
- * candidate execution is the portable bundle's committed pos/neg/err fixture.
- * No raw argv, caller-provided script, shell, or arbitrary file input crosses
- * the MCP boundary. T3/T4/T5 qualifications are deliberately independent.
+ * Candidate tools share this one registry/runner gateway. The generic candidate
+ * execution remains a committed pos/neg/err fixture; the first typed candidate
+ * operation is Highs 1.15.1 solve-lp. No raw argv, caller script, shell or
+ * arbitrary file input crosses the MCP boundary. T3/T4/T5 stay independent.
  */
 import { readFileSync } from "node:fs";
 import { readFile, writeFile, lstat, mkdtemp, rm } from "node:fs/promises";
