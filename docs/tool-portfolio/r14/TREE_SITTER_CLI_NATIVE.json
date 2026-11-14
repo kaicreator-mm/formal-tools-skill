@@ -1,0 +1,82 @@
+{
+  "schema": "formal-tools/i24-r14-tree-sitter-cli/1.0",
+  "output_label": "FORMAL_TOOLS_I24_TOOL_INTEGRATION_CONTINUE",
+  "source": {
+    "branch": "feat/i24-r14-tree-sitter-cli-fixture",
+    "base_main": "06bc154913c584418692faca883a85f1840ad7df",
+    "head_before_evidence": "72f5c716f461e1af9a368f452cc0787a19408e8b",
+    "builder_path": "portable/builders/tools/tree-sitter.sh",
+    "builder_git_blob": "d5885690d50ec286a0d40397f08e84ece22c5709",
+    "fixture_expect_git_blob": "a0c8dc9a123218331cb4a8ccba1e49f9249e7b72",
+    "grammar_git_blob": "c79cc1748eee0d804d958ba0439578a2867a8833",
+    "pos_git_blob": "04fc88335369301f43329074a6a6c2bd97cd7d1f",
+    "neg_git_blob": "23fba60418e0888ec135c23916e130a9b0efa07"
+  },
+  "asset": {
+    "tool": "tree-sitter",
+    "version": "0.27.2",
+    "original_drive_package_sha256": "03d9454d2b7914e37d9cba3d50d8a0250ee3408e65e79c4c43749e836ba3ca5d",
+    "canonical_manifest_match": true,
+    "original_meta_alias": "TOOL_TOOL_ID=tree-sitter (legacy delivered package)",
+    "original_package_modified": false,
+    "staged_meta_normalized_only": true,
+    "staged_run_shim_sha256": "ee8d7a2cb244472b6c16c50f92ce9a2c21467a71bec81300e1d7ca5f0dee3227",
+    "official_rebuild": false
+  },
+  "host": {
+    "os": "Debian13 Linux x86_64",
+    "uid_gid": "65534:65534",
+    "current_main_runner_git_blob": "102e971481a3e213fdb41fa45230b1dd3beaf2bd",
+    "runtime": "Tree-sitter official CLI Rust binary / native QuickJS grammar generation / host GCC for C parser build, not hermetic C compiler",
+    "python_binding_available": false,
+    "python_binding_test_ran": false
+  },
+  "tech_receipts": {
+    "doctor_exit": 0,
+    "version_exit": 0,
+    "verify_exit": 0,
+    "phase_exits": {
+      "setup": 0,
+      "pos": 0,
+      "neg": 1,
+      "err": 1
+    },
+    "pos_ast": "source_file with number nodes 123 and 456",
+    "neg_ast": "ERROR node for abc",
+    "error_boundary": "missing file rejected",
+    "typed_tsv_schema": "formal-tools/portable-verify/0.2",
+    "tsv_sha256": "d3da7e3271aee30566a1c1157ac2a1b6750b322efc69aa21df6b1bc9805bc24a",
+    "compiler_missing_exit": 1,
+    "compiler_missing_verdict": "FAIL"
+  },
+  "repair": {
+    "problem": "Generated original run wrapper forces XDG_CACHE_HOME to root-owned $FT_ROOT/runtimes/py-cache for CLI parser compilation, causing Permission denied when used under shared Runner",
+    "code": "Use writable isolated $FT_TMP/tree-sitter-cache for CLI; preserve original $FT_ROOT/runtimes/py-cache only for --py branch; direct CLI fallback honors HOME/XDG_CACHE_HOME",
+    "pos_neg_err": "All controlled via fixed committed EXPECT_*_VIA=run (no arbitrary sh/raw argv from MCP)",
+    "caveat": "Existing Python pos.py/neg.py remain intact as a separate unqualified binding test; CLI route is limited, compiler dependency remains external"
+  },
+  "raw_evidence": {
+    "drive_file_id": "1Kpv9CCUG4EWBiLvUa7i8B2h9GyFCQpC2",
+    "url": "https://drive.google.com/file/d/1Kpv9CCUG4EWBiLvUa7i8B2h9GyFCQpC2/view?usp=drivesdk",
+    "sha256": "73d7a86cb935990187907e8d97f5ea2b8ce24a4d051af8fcff44a33bf48b009e",
+    "bytes": 13348,
+    "zip_entries": 25,
+    "crc_pass": true,
+    "authenticated_readback_length_match": true,
+    "per_file_hashes_in": "R14_TREE_SITTER_CLI_RECEIPTS.json",
+    "compiler_failure_verbose_stderr_omitted_for_environment_privacy": true
+  },
+  "qualification": {
+    "technical_native_cli_T3_scope_verified": true,
+    "portable_run_builder_new_code_verified_in_staged_host": true,
+    "needs_official_meta_rebuild": true,
+    "needs_host_compiler_provenance": true,
+    "needs_independent_source_first_review": true,
+    "needs_exact_sha_woodpecker": true,
+    "full_sdk_mcp_cli_host_e2e": false,
+    "formal_T4_qualified": false,
+    "independent_T5_qualified": false,
+    "product_11": false,
+    "do_not_reopen_7_14": true
+  }
+}
