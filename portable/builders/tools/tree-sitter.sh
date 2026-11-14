@@ -1,7 +1,11 @@
 # builders/tools/tree-sitter.sh — tree-sitter CLI (official static release binary) +
-# python binding with bundled grammars (tree-sitter-language-pack) for real parse verification.
-# The CLI alone cannot parse without a compiled grammar; verification exercises the
-# tree-sitter core through the python binding (same upstream project, real parsing).
+# python language-pack grammars (tree-sitter-language-pack) kept for the --py shim branch.
+# Verification exercises the real CLI route: `generate --js-runtime native` (native
+# QuickJS in the CLI) turns the fixture grammar.js into parser.c, which the CLI compiles
+# with the build host's gcc — non-hermetic; provenance (Debian gcc 14.2.0, ft-builder:deb13)
+# is recorded in docs/tool-portfolio/r14/TREE_SITTER_CLI_NATIVE.json — then `parse` runs
+# the committed POS/NEG/ERR cases. The python binding itself is NOT the verification route
+# (python_binding_available=false in the r14 receipt).
 FT_TOOL_ID=tree-sitter
 FT_TOOL_VERSION=0.27.2
 FT_TOOL_KIND=binary
