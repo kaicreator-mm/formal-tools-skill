@@ -151,3 +151,73 @@ export function planPortfolioFixture(tool: string): PortfolioFixturePlan;
 export function runPortableGate(tool: string, options?: {
   mode?: "verify-fixture" | "doctor"; timeoutS?: number
 }): Promise<PortfolioGateReceipt>;
+
+
+/** A bounded, typed linear program for the single admitted Highs 1.15.1 Python Library operation. */
+export interface HighsLinearProgram {
+  sense: "min" | "max";
+  objective: number[];
+  variables: { lower: number | null; upper: number | null }[];
+  constraints: {
+    lower: number | null;
+    upper: number | null;
+    coefficients: number[];
+  }[];
+}
+export interface PortfolioOperationPlan {
+  tool: "highs";
+  operation: "solve-lp";
+  schema: "formal-tools/highs-solve-lp/1.0";
+  capability_ids: string[];
+  model: HighsLinearProgram;
+  input_sha256: string;
+  mode: "typed";
+  budget: {
+    max_variables: 64;
+    max_constraints: 128;
+    max_input_bytes: number;
+    max_timeout_s: 30;
+  };
+  raw_argv_allowed: false;
+}
+export interface PortfolioOperationReceipt {
+  schema: "formal-tools/portfolio-operation/0.1";
+  tool: "highs";
+  operation: "solve-lp";
+  status: "T4_OPERATION_EXECUTED_UNREVIEWED" | "PORTFOLIO_OPERATION_FAILED" | "NOT_RUN_FAIL_CLOSED";
+  qualification: "NOT_T4_ACCEPTED_INDEPENDENT_REVIEW_PENDING" | "NOT_T4_ACCEPTED";
+  capability_ids?: string[];
+  process?: {
+    exit_code: number | null;
+    signal: string | null;
+    timed_out: boolean;
+    output_limit: boolean;
+    elapsed_ms: number;
+    error: string | null;
+  };
+  runner_sha256?: string;
+  metadata_sha256?: string;
+  fixture_contract_sha256?: string;
+  operation_script_sha256?: string;
+  input_sha256?: string;
+  solver?: {
+    schema: "formal-tools/highs-solve-lp/1.0";
+    tool: "highs";
+    highspy_version: "1.15.1";
+    numpy_version: string;
+    python_version: string;
+    input_sha256: string;
+    model_status: "kOptimal" | "kInfeasible" | "kUnbounded" | "kUnboundedOrInfeasible" | "kTimeLimit";
+    objective: number | null;
+    variables: number[];
+    solver_api_status: "kOk";
+  } | null;
+  streams?: { stdout: string; stderr: string; stdout_sha256: string; stderr_sha256: string };
+  budget?: { timeout_s: number; solver_time_limit_s: number; max_variables: 64; max_constraints: 128 };
+  reason?: string;
+  scope: string;
+}
+export function planPortfolioOperation(tool: "highs", operation: "solve-lp", model: HighsLinearProgram): PortfolioOperationPlan;
+export function runPortfolioOperation(tool: "highs", operation: "solve-lp", model: HighsLinearProgram, options?: {
+  timeoutS?: number;
+}): Promise<PortfolioOperationReceipt>;
