@@ -1,0 +1,201 @@
+{
+  "schema": "formal-tools/i11-real-dis-v020-target-consumption/0.1",
+  "source_head": "e2d20190fdea3084c72bd70de1c15cf9500d128d",
+  "driver_git_blob": "2c457f42b0cf017ea27a2618012a42e30091bfa2",
+  "technical_execution": {
+    "driver_git_blob": "2c457f42b0cf017ea27a2618012a42e30091bfa2",
+    "original_chain_executed": true,
+    "original_chain_in_process": false,
+    "source_commit_independently_attested": false,
+    "host_independently_attested": false
+  },
+  "dis_target_reference": {
+    "repository": "kaicreator-mm/domain-harness",
+    "pr": 1497,
+    "source_head": "90afefa81ef9ad0d42087ffc8a0dbaa32757811f",
+    "example_path": "examples/dis-v020-native-sdk/b05-target-consumer.test.mjs",
+    "example_blob": "242930c5b10f629a13115a45069f2814f6042316",
+    "target": "linux/x64/node",
+    "contract": "dis.v0.2"
+  },
+  "original_target": {
+    "verified_head": "90afefa81ef9ad0d42087ffc8a0dbaa32757811f",
+    "pins_verified": [
+      {
+        "role": "consumer_test",
+        "path": "examples/dis-v020-native-sdk/b05-target-consumer.test.mjs",
+        "git_blob": "242930c5b10f629a13115a45069f2814f6042316"
+      },
+      {
+        "role": "selected_build",
+        "path": "examples/dis-v020-cross-project/selected-build.mjs",
+        "git_blob": "450f16affdd91071ae104da64fa10e1c0a162c48"
+      },
+      {
+        "role": "selected_build_test",
+        "path": "examples/dis-v020-cross-project/selected-build.test.mjs",
+        "git_blob": "620b34d10ab4dd2bcf0cd28afd88f7485acc9086"
+      },
+      {
+        "role": "build_entry",
+        "path": "tooling/build/dis-v020.mjs",
+        "git_blob": "e747c332f4c3e59b07ee702035fbf9309651fa3a"
+      },
+      {
+        "role": "contracts_entry",
+        "path": "packages/contracts/dis-v020.mjs",
+        "git_blob": "d4e75b2b55c410bac030638734ea761bd5448d9e"
+      },
+      {
+        "role": "microkernel_entry",
+        "path": "packages/microkernel/dis-v020.mjs",
+        "git_blob": "55c2d0e88964ec3a90d19d7bc48b2b651054b28d"
+      },
+      {
+        "role": "native_fixture",
+        "path": "examples/dis-v020-native-sdk/native-fixture.mjs",
+        "git_blob": "181d62da108762b0b0bdf987c6083889d2bbefa5"
+      },
+      {
+        "role": "cross_project_consumer",
+        "path": "examples/dis-v020-cross-project/consumer.mjs",
+        "git_blob": "28bd62fbdfd89ba488656f95d48b2b3595444392"
+      },
+      {
+        "role": "cross_project_manifest",
+        "path": "examples/dis-v020-cross-project/manifest.json",
+        "git_blob": "39e14468723c4211d1e55d6a7c3aa1a16204c5a8"
+      },
+      {
+        "role": "tally_snapshot",
+        "path": "examples/dis-v020-cross-project/snapshots/tally/business.mjs",
+        "git_blob": "54015fb63ffb13b4f4e562f660d2172098b5f7f4"
+      }
+    ],
+    "clean_checkout_before": {
+      "tracked_worktree_clean": true,
+      "tracked_index_flags_clean": true,
+      "nonignored_untracked_sources_absent": true,
+      "ignored_outside_dependency_generated_boundary_absent": true,
+      "ignored_dependencies_independently_attested": false,
+      "ignored_generated_outputs_independently_attested": false,
+      "race_free_execution_attested": false
+    },
+    "clean_checkout_after": {
+      "tracked_worktree_clean": true,
+      "tracked_index_flags_clean": true,
+      "nonignored_untracked_sources_absent": true,
+      "ignored_outside_dependency_generated_boundary_absent": true,
+      "ignored_dependencies_independently_attested": false,
+      "ignored_generated_outputs_independently_attested": false,
+      "race_free_execution_attested": false
+    }
+  },
+  "execution_platform": {
+    "node": "v24.21.0",
+    "platform": "linux",
+    "architecture": "x64",
+    "runtime_target": "linux/x64/node"
+  },
+  "candidate_sha256": "ba06f7e0ebc3ba7d39e4f9adf07561cb9ed2f1304c960e6090d4a64d06746aed",
+  "method": {
+    "status": "STRUCTURALLY_VALID",
+    "problem_sha256": "3088c558a5833609428b0e49b8bfdc22089f7584a45a6b79952cee817ff078c1",
+    "method_sha256": "4592767e0591e906f0cf3b1c28aaf314478c1be31d62ac675bf758fbce6deebd"
+  },
+  "witness_result": {
+    "status": "BLOCKED",
+    "reason": "PRODUCT_TRUST_ROOTS_NOT_APPROVED",
+    "independent_professional_oracle": false,
+    "qualified_solution": false,
+    "claim_result": "UNVERIFIED",
+    "replay_allowed": false,
+    "solution_promotable": false,
+    "dis_host_executed": false,
+    "effect_dispatched": false,
+    "positive_replay": "BLOCK",
+    "product_owner_credential": "ABSENT",
+    "independent_oracle_credential": "ABSENT",
+    "trusted_host_credential": "ABSENT"
+  },
+  "store_lifecycle": {
+    "persist": {
+      "status": "CANDIDATE_PERSISTED",
+      "record_write": "NEW"
+    },
+    "inspect": {
+      "status": "REPLAY_BLOCKED_UNQUALIFIED"
+    },
+    "stale_probe": {
+      "status": "STALE"
+    },
+    "revoke": {
+      "status": "INVALIDATED",
+      "reason": "OPERATOR_REVOKED"
+    },
+    "tombstone_dominates": {
+      "status": "INVALIDATED",
+      "reason": "EXPLICIT_REVOCATION"
+    },
+    "no_resurrection": {
+      "status": "INVALIDATED"
+    }
+  },
+  "original_chain": {
+    "consumer_test": {
+      "file": "examples/dis-v020-native-sdk/b05-target-consumer.test.mjs",
+      "exit_code": 0,
+      "tests": {
+        "total": 3,
+        "passed": 3,
+        "failed": 0
+      },
+      "duration_ms": 659,
+      "stdout_sha256": "48fef2faf42c3e971088a56b99a53648a0c3bdd7bc144a1a8ea2b2024ce0616a"
+    },
+    "selected_build_test": {
+      "file": "examples/dis-v020-cross-project/selected-build.test.mjs",
+      "exit_code": 0,
+      "tests": {
+        "total": 9,
+        "passed": 9,
+        "failed": 0
+      },
+      "duration_ms": 503,
+      "stdout_sha256": "55c3df3ab8d65a68ebc8b0a04026a29712ec4e0bc6d18b7e2aea2a1319975a82"
+    },
+    "observed_semantics": {
+      "business_function": "tally.assessTaskEvidence",
+      "kinds": "OBSERVATION",
+      "authority": "NONE",
+      "attested": false,
+      "kdp_admission": "ADMITTED",
+      "execution": "NOT_PROVEN",
+      "business_attested": false,
+      "forged_claim_task_pass": false,
+      "stale_pin_boot": "DIS_SOURCE_ANCHOR_STALE",
+      "missing_pin_coverage": "DIS_SOURCE_ANCHOR_COVERAGE_INCOMPLETE",
+      "external_effect": "FORBIDDEN_WITHOUT_KDP_PERMIT"
+    }
+  },
+  "dis_preflight_envelope": {
+    "status": "REPLAY_BLOCKED_UNQUALIFIED",
+    "kind": "UNKNOWN",
+    "authority": "NONE",
+    "claim_result": "UNVERIFIED",
+    "effect_dispatched": false,
+    "host_invocations": 0
+  },
+  "qualification": {
+    "positive_replay": "BLOCK",
+    "g4_qualified_replay": "BLOCK",
+    "g5_formal_accepted": "BLOCK",
+    "g6_dis_host": "TECHNICAL_ONLY_NOT_ATTESTED"
+  },
+  "original_claim": "UNVERIFIED",
+  "independent_professional_oracle": false,
+  "qualified_solution": false,
+  "qualified_replay": false,
+  "dis_effects": 0,
+  "status": "PASSED_ENGINEERING_ONLY"
+}
