@@ -7,11 +7,11 @@
     "scope": "NEW_DIRECTION_NOT_R1",
     "accepted_pr_12_head": "b07318af910cbeedae6228a180b06e5bce153ab8",
     "main_integrated_sha": "e1d172ec7f3b2743993f6b4004fe3b5b03007150",
-    "latest_reconciled_main_sha": "c6a042174341828141d8445e1ddc639d2fef5393",
+    "latest_reconciled_main_sha": "eeabfc96900c4a68d858dabd129141b4afcaa8f0",
     "reconciled_from_issue": 11,
-    "reconciliation_note": "G3 PR18/20/21 merged with scoped qualification; no native ADS24 or business Oracle. G4 candidate-only preflight is not G4 QUALIFIED."
+    "reconciliation_note": "R21 evidence-only status reconciliation against merged exact receipts through R20; engineering scope accepted, professional Source/Oracle/Host and qualified Replay remain BLOCKED. Original accepted PR12/base refs preserved as historical."
   },
-  "status": "G0_G1_RESEARCH_G2_ACCEPTED_G3_STATIC_INTEGRATED_G4_CANDIDATE_IN_REVIEW",
+  "status": "G0_G2_ACCEPTED_G3_G6_ENGINEERING_SCOPED_FULL_QUALIFICATION_BLOCKED",
   "gates": [
     {
       "id": "G0",
@@ -56,7 +56,7 @@
       "depends_on": [
         "G2"
       ],
-      "status": "PARTIAL_STATIC_INTEGRATED_NATIVE_ORACLE_BLOCKED",
+      "status": "NATIVE_SOLVE_VERIFY_SCOPED_PROFESSIONAL_ORACLE_BLOCKED",
       "exit": "native exact-tool receipts, negative/adversarial oracle, UNKNOWN not PASS"
     },
     {
@@ -65,7 +65,7 @@
       "depends_on": [
         "G3"
       ],
-      "status": "CANDIDATE_REPLAY_PREFLIGHT_SOURCE_IN_REVIEW",
+      "status": "DURABLE_CANDIDATE_CRYPTO_PREFLIGHT_SCOPED_QUALIFIED_REPLAY_BLOCKED",
       "exit": "independent semantics, replay/fingerprint and invalidation are required for reuse"
     },
     {
@@ -75,7 +75,7 @@
         "G1",
         "G3"
       ],
-      "status": "NOT_STARTED",
+      "status": "REAL_PAIRED_AB_SCOPED_BUSINESS_ORACLE_BLOCKED",
       "exit": "paired LLM-only vs LLM+tools with true accuracy, false-PASS, cost, semantic coverage, reuse"
     },
     {
@@ -85,7 +85,7 @@
         "G4",
         "G5"
       ],
-      "status": "NOT_STARTED",
+      "status": "REAL_DIS_CONSUMPTION_SCOPED_QUALIFIED_EFFECT_BLOCKED",
       "exit": "domain-app consumes qualified Solution; no parallel domain runtime"
     }
   ],
@@ -225,11 +225,11 @@
         "T-G2-02"
       ],
       "owner": "web+local-when-must",
-      "status": "PARTIAL_SOURCE_INTEGRATED_NATIVE_ORACLE_PENDING",
+      "status": "Z3_CVC5_NATIVE_24_EACH_SCOPED_PROFESSIONAL_ORACLE_BLOCKED",
       "evidence": [
-        "PR #18 merge c6a042174341828141d8445e1ddc639d2fef5393: Z3 host smoke receipt candidate only",
-        "PR #20 merge a12982e034796a02a2ea7d32fbf5c47c977a7bbd: byte-bound preflight untrusted",
-        "PR #21 merge dd541eeea4baec167092ea77e3c86dfddf3725ba: frozen ADS 24 static SMT only"
+        "PR #62 head cca80783d45f351a853984d2d997657622410ef3; original 24x2 Z3/cvc5 native receipts",
+        "validation/ads24-native-2026-11-13/NATIVE_PAIR.json",
+        "PR #80 merged; independent finite verifier checks source-authored frozen ADS model; NOT professional semantic Oracle"
       ]
     },
     {
@@ -240,10 +240,11 @@
         "T-G3-01"
       ],
       "owner": "web",
-      "status": "CANDIDATE_REPLAY_PREFLIGHT_IN_REVIEW_NOT_QUALIFIED",
+      "status": "DURABLE_CANDIDATE_AND_THREE_ROLE_PREFLIGHT_SCOPED_QUALIFIED_REPLAY_BLOCKED",
       "evidence": [
-        "packages/runner/js/solution-candidate.mjs",
-        "tests/solution-candidate.test.mjs"
+        "PR #23/#66/#83 merged; persisted content-addressed candidate, drift/STALE, immutable revocation tombstone, synthetic Ed25519 triad",
+        "validation/g4-real-store-lifecycle-2026-11-13/RECEIPT.json",
+        "registry/G4_QUALIFICATION_ANCHORS.json (NOT_CONFIGURED / empty; no qualified Solution or authorized Replay)"
       ]
     },
     {
@@ -254,7 +255,12 @@
         "T-G3-01"
       ],
       "owner": "web+local-when-must",
-      "status": "NOT_STARTED"
+      "status": "REAL_FROZEN_20X2_AB_SCOPED_BUSINESS_ORACLE_BLOCKED",
+      "evidence": [
+        "PR #74/#82 merged; true DeepSeek two-arm frozen ADS cases, common-mode solver error guard",
+        "validation/g5-hard-r1-llm-real-2026-11-14/ANALYSIS.json",
+        "LLM_ONLY and LLM_TOOLS each 20/20 correct, false-PASS=0, UNKNOWN=0; no accuracy lift; independent business Oracle still blocked"
+      ]
     },
     {
       "id": "T-G6-01",
@@ -265,18 +271,71 @@
         "T-G5-01"
       ],
       "owner": "web",
-      "status": "NOT_STARTED"
+      "status": "REAL_DIS_NODE24_3_AND_9_ENGINEERING_SCOPED_QUALIFIED_EFFECT_BLOCKED",
+      "evidence": [
+        "PR #78/#80/#84/#85/#88/#89/#90 merged; source-guard repair reviewed P0/P1/P2=0 at #88",
+        "validation/g6-dis-target-real-r20-2026-11-14/RECEIPT.json",
+        "Original domain-harness HEAD 90afefa81ef9ad0d42087ffc8a0dbaa32757811f, original tests 3/3 and 9/9",
+        "Product trust roots absent; original Claim UNVERIFIED; qualified replay=false, DIS Effects=0"
+      ]
     }
   ],
   "execution": {
     "strategy": "ADS#1359 Delivery-First; Web-first, single Writer per write set",
     "tool_downloads": "PARALLEL_NOT_BLOCKING_G0_G1",
-    "native_execution": "PR18_Z3_SMOKE_RECORDED_UNATTESTED; ADS24_NOT_RUN",
-    "llm_ab_benchmarks": "NOT_RUN",
+    "native_execution": "Z3_5.4.0_AND_CVC5_1.4.2_REAL_24_EACH_RECEIPTS_SCOPED_NO_PROFESSIONAL_ORACLE",
+    "llm_ab_benchmarks": "DEEPSEEK_REAL_FROZEN_20X2_RECOMPUTED_BOTH_20_OF_20_NO_ACCURACY_LIFT",
     "old_issue7": "OUT_OF_SCOPE",
     "g2_native_execution": "NOT_RUN",
     "g2_llm_live_integration": "NOT_RUN",
     "portable_runtime": "PR22_PACKAGED_34_LEGACY_VERIFY_STALE_CORRECTED_RUNNER_REPLAY_REQUIRED",
-    "solution_reuse": "BLOCKED_NOT_QUALIFIED"
+    "solution_reuse": "DURABLE_CANDIDATE_VALIDATED_POSITIVE_QUALIFIED_REPLAY_BLOCKED",
+    "consumer_execution": "R20_ORIGINAL_DIS_NODE24_3_OF_3_PLUS_9_OF_9_ENGINEERING_ONLY"
+  },
+  "reconciliation": {
+    "schema": "formal-tools/i11-dag-evidence-reconciliation/0.1",
+    "controller_issue": 11,
+    "as_of": "2026-11-15",
+    "reconciled_against_main_sha": "eeabfc96900c4a68d858dabd129141b4afcaa8f0",
+    "g3_native_receipt": {
+      "path": "validation/ads24-native-2026-11-13/NATIVE_PAIR.json",
+      "git_blob": "cee8f188cce20b042df505f824cccae64d2c9b1c",
+      "qualification": "NATIVE_ENGINEERING_SCOPED"
+    },
+    "g4_store_receipt": {
+      "path": "validation/g4-real-store-lifecycle-2026-11-13/RECEIPT.json",
+      "git_blob": "a80ab74e7150353de214f5ddd7cbf47696202347",
+      "qualification": "CANDIDATE_ONLY"
+    },
+    "g4_product_trust_registry": {
+      "path": "registry/G4_QUALIFICATION_ANCHORS.json",
+      "git_blob": "e88c48d15f685d8eae20669aa4420c4035e40c25",
+      "status": "NOT_CONFIGURED",
+      "anchors": 0
+    },
+    "g5_real_ab": {
+      "path": "validation/g5-hard-r1-llm-real-2026-11-14/ANALYSIS.json",
+      "git_blob": "242397ec0c27ea3aaa8ec201b1808ac466343453",
+      "cases_per_arm": 20,
+      "false_pass_per_arm": 0,
+      "qualified_business_oracle": false
+    },
+    "g6_dis_r20": {
+      "path": "validation/g6-dis-target-real-r20-2026-11-14/RECEIPT.json",
+      "git_blob": "b749334686aac6ac59b979819a196e9e106637ae",
+      "driver_git_blob": "0954f885d485eec76d3b5131de192e6296a8b15a",
+      "consumer_test_pass": 3,
+      "selected_build_test_pass": 9,
+      "qualified_solution": false,
+      "qualified_replay": false,
+      "dis_effects": 0
+    },
+    "formal_full_exit": "BLOCKED_ORIGINAL_SOURCE_MODEL_PROFESSIONAL_ORACLE_TOOL_HOST_AND_POSITIVE_QUALIFIED_REPLAY",
+    "excluded": [
+      "#24 generic 36-tool portfolio",
+      "#4 closed runtime",
+      "#7/#14 closed issues"
+    ],
+    "note": "This is a ledger correction only; no new native solver, LLM API, DIS Host run, Source/Oracle/Host attestation or Product acceptance is claimed."
   }
 }
