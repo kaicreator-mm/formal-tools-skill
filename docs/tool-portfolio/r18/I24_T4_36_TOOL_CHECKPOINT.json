@@ -1,0 +1,819 @@
+{
+  "schema": "formal-tools/i24-r18-36-tool-t4-reconciliation/1.0",
+  "output_label": "FORMAL_TOOLS_I24_TOOL_INTEGRATION_CONTINUE",
+  "date": "2026-11-15",
+  "authority": {
+    "portfolio_issue": 24,
+    "product_issue": 11,
+    "legacy_runtime_issue": 4,
+    "issue_numbers": "25-60",
+    "do_not_reopen": [
+      7,
+      14
+    ]
+  },
+  "base_main_sha": "d18dd29f4141f4a50f5e21d87e7dc0474cd5bb0a",
+  "historical": {
+    "source_pr22": {
+      "pr": 22,
+      "merged": true,
+      "exact_head": "8aa994718895bcf49988981b41d391f624075602",
+      "merged_commit": "eff58e166de2b9ae71470f0ea35da92ce493c19d"
+    },
+    "t4_gateway_pr69": {
+      "pr": 69,
+      "merged": true,
+      "merge_commit": "12032f1d5a759dca5a1b24eedbefae2dfe01d3e0"
+    }
+  },
+  "this_increment": {
+    "why3_host_safety": {
+      "pr": 92,
+      "exact_head": "62e4a70d4078fd8a237a433a328cbdbc26a5344a",
+      "merge_commit": "d6a031f808e8c5297ada36e69a7f707b0ee7bea2",
+      "post_merge_woodpecker_push": 855,
+      "scope": "BUILDER_SCRIPT_P0_HOST_WRITE_REMOVED_ONLY_NO_CANONICAL_SAFE_PACKAGE",
+      "tool_issue": 59
+    },
+    "tree_sitter_native_cli": {
+      "pr": 87,
+      "exact_head": "90aa3e34484b60c2a158f3a9eeb9d959e0afe812",
+      "merge_commit": "d18dd29f4141f4a50f5e21d87e7dc0474cd5bb0a",
+      "post_merge_woodpecker_push": 856,
+      "scope": "PINNED_FIXED_NATIVE_CLI_FIXTURE_SOURCE_ONLY_NOT_COMPLETE_T4",
+      "tool_issue": 57
+    },
+    "doctor_static_elf": {
+      "pr": 86,
+      "exact_head": "b9e4e419e1a144c7cb1e3b8e6ccee74d50d66871",
+      "review": "REWORK_P1",
+      "finding": "PT_INTERP_ABSENCE_FALSE_STATIC_FOR_ET_REL_AND_ET_DYN_WITH_MISSING_DT_NEEDED",
+      "tool_issue": 24
+    }
+  },
+  "counts": {
+    "tool_issues": 36,
+    "source_registered": 36,
+    "original_tar_t3_scoped_receipts_reference": 19,
+    "callable_scoped_including_alternates_reference": 34,
+    "original_13_runtime_scoped": 13,
+    "original_typed_operations": 53,
+    "added_candidate_discovery_routes": 23,
+    "candidate_portable_gate_source_routes": 23,
+    "added_mcp_portfolio_methods": 3,
+    "added_sdk_portfolio_exports": 5,
+    "independently_reviewed_scoped_three_phase_technical_tools_from_r9": 5,
+    "formal_new_candidate_t4_accepted": 0,
+    "independently_qualified_t5_business": 0,
+    "complete_36_tool_t6_acceptance": 0
+  },
+  "truth_rules": [
+    "T0 registration is not source publication, rights, or publisher attestation",
+    "T3 original tar and T3 host alternative are distinct scopes and must not be added as formal successes",
+    "A source-integrated CLI/MCP/SDK gateway or synthetic fixture pass never promotes T4",
+    "R9 five tool technical three-phase reviewed cases are not full native CLI/MCP/SDK E2E",
+    "Why3 original archive still contains host-unsafe run script, never run privileged",
+    "A changed SHA never inherits previous reviewer approval or CI",
+    "T5 requires separate source/model/oracle/host and downstream real consumption",
+    "Other 34 tool Issues had no new exact-source delta in this reconciliation"
+  ],
+  "sources": [
+    "docs/tool-portfolio/r4/T4_INTEGRATION.json",
+    "docs/tool-portfolio/r1/TOOL_PORTFOLIO_DAG.json",
+    "registry/PROBLEM_CAPABILITIES.json",
+    "https://github.com/kaicreator-mm/formal-tools/issues/24",
+    "https://github.com/kaicreator-mm/formal-tools/pull/22",
+    "https://github.com/kaicreator-mm/formal-tools/pull/69",
+    "https://github.com/kaicreator-mm/formal-tools/pull/87",
+    "https://github.com/kaicreator-mm/formal-tools/pull/92",
+    "https://github.com/kaicreator-mm/formal-tools/pull/86"
+  ],
+  "tools": [
+    {
+      "id": "aflpp",
+      "issue": 25,
+      "expected_version": "5.03c",
+      "origin": "candidate",
+      "capabilities": [
+        "test.fuzz"
+      ],
+      "reference_t3_route_r4": "ORIGINAL_TAR_RUNNER_PASS_R3",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "TECHNICAL_PASS_INDEPENDENT_REVIEWED_R9",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "CANDIDATE_FIXED_PORTABLE_GATE_ROUTE_SOURCE_ONLY",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "alloy",
+      "issue": 26,
+      "expected_version": "6.2.0",
+      "origin": "native-ref",
+      "capabilities": [
+        "model.relational",
+        "model.state"
+      ],
+      "reference_t3_route_r4": "ORIGINAL_TAR_RUNNER_PASS_R3",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "ORIGINAL_13_SCOPED_NATIVE_RUNTIME_INTERFACE",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "apache-jena",
+      "issue": 27,
+      "expected_version": "5.5.0",
+      "origin": "native-ref",
+      "capabilities": [
+        "knowledge.rdf"
+      ],
+      "reference_t3_route_r4": "ORIGINAL_TAR_RUNNER_PASS_R3",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "ORIGINAL_13_SCOPED_NATIVE_RUNTIME_INTERFACE",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "apalache",
+      "issue": 28,
+      "expected_version": "0.63.0",
+      "origin": "native-ref",
+      "capabilities": [
+        "model.state",
+        "logic.smt"
+      ],
+      "reference_t3_route_r4": "ORIGINAL_TAR_RUNNER_PASS_R4",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "ORIGINAL_13_SCOPED_NATIVE_RUNTIME_INTERFACE",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "causal-learn",
+      "issue": 29,
+      "expected_version": "0.1.4.8",
+      "origin": "candidate",
+      "capabilities": [
+        "causal.discovery"
+      ],
+      "reference_t3_route_r4": "ALTERNATE_WHEELHOUSE_SCOPED_PASS_R4",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "CANDIDATE_FIXED_PORTABLE_GATE_ROUTE_SOURCE_ONLY",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "cbmc",
+      "issue": 30,
+      "expected_version": "6.11.0",
+      "origin": "candidate",
+      "capabilities": [
+        "code.verify"
+      ],
+      "reference_t3_route_r4": "ORIGINAL_TAR_RUNNER_PASS_R3",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "CANDIDATE_FIXED_PORTABLE_GATE_ROUTE_SOURCE_ONLY",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "clingo",
+      "issue": 31,
+      "expected_version": "5.8.3",
+      "origin": "native-ref",
+      "capabilities": [
+        "logic.rules",
+        "opt.combinatorial"
+      ],
+      "reference_t3_route_r4": "ORIGINAL_TAR_RUNNER_PASS_R3",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "ORIGINAL_13_SCOPED_NATIVE_RUNTIME_INTERFACE",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "cvc5",
+      "issue": 32,
+      "expected_version": "1.4.2",
+      "origin": "native-ref",
+      "capabilities": [
+        "logic.smt",
+        "proof.deductive"
+      ],
+      "reference_t3_route_r4": "ORIGINAL_TAR_RUNNER_PASS_R3",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "ORIGINAL_13_SCOPED_NATIVE_RUNTIME_INTERFACE",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "dafny",
+      "issue": 33,
+      "expected_version": "4.11.0",
+      "origin": "native-ref",
+      "capabilities": [
+        "proof.deductive",
+        "code.verify"
+      ],
+      "reference_t3_route_r4": "ORIGINAL_TAR_RUNNER_PASS_R3",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "ORIGINAL_13_SCOPED_NATIVE_RUNTIME_INTERFACE",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "dowhy",
+      "issue": 34,
+      "expected_version": "0.14",
+      "origin": "candidate",
+      "capabilities": [
+        "causal.inference"
+      ],
+      "reference_t3_route_r4": "ALTERNATE_WHEELHOUSE_SCOPED_PASS_R4",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "CANDIDATE_FIXED_PORTABLE_GATE_ROUTE_SOURCE_ONLY",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "elk",
+      "issue": 35,
+      "expected_version": "0.6.0",
+      "origin": "candidate",
+      "capabilities": [
+        "ontology.inference"
+      ],
+      "reference_t3_route_r4": "ORIGINAL_TAR_RUNNER_PASS_R3",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "TECHNICAL_PASS_INDEPENDENT_REVIEWED_R9",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "CANDIDATE_FIXED_PORTABLE_GATE_ROUTE_SOURCE_ONLY",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "fast-check",
+      "issue": 36,
+      "expected_version": "4.10.2",
+      "origin": "candidate",
+      "capabilities": [
+        "test.property"
+      ],
+      "reference_t3_route_r4": "ORIGINAL_TAR_RUNNER_PASS_R3",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "TECHNICAL_PASS_INDEPENDENT_REVIEWED_R9",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "CANDIDATE_FIXED_PORTABLE_GATE_ROUTE_SOURCE_ONLY",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "fast-downward",
+      "issue": 37,
+      "expected_version": "24.06",
+      "origin": "candidate",
+      "capabilities": [
+        "planning.classical"
+      ],
+      "reference_t3_route_r4": "HOST_PYTHON313_RUNNER_PASS_R4",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "CANDIDATE_FIXED_PORTABLE_GATE_ROUTE_SOURCE_ONLY",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "highs",
+      "issue": 38,
+      "expected_version": "1.15.1",
+      "origin": "candidate",
+      "capabilities": [
+        "opt.numerical"
+      ],
+      "reference_t3_route_r4": "ALTERNATE_WHEELHOUSE_SCOPED_PASS_R4",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "CANDIDATE_FIXED_PORTABLE_GATE_ROUTE_SOURCE_ONLY",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "hypothesis",
+      "issue": 39,
+      "expected_version": "6.170.15",
+      "origin": "candidate",
+      "capabilities": [
+        "test.property"
+      ],
+      "reference_t3_route_r4": "ALTERNATE_WHEELHOUSE_SCOPED_PASS_R4",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "TECHNICAL_PASS_INDEPENDENT_REVIEWED_R9",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "CANDIDATE_FIXED_PORTABLE_GATE_ROUTE_SOURCE_ONLY",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "kani",
+      "issue": 40,
+      "expected_version": "0.68.0",
+      "origin": "candidate",
+      "capabilities": [
+        "code.verify"
+      ],
+      "reference_t3_route_r4": "ORIGINAL_TAR_RUNNER_PASS_R4",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "CANDIDATE_FIXED_PORTABLE_GATE_ROUTE_SOURCE_ONLY",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "lean4",
+      "issue": 41,
+      "expected_version": "4.35.0",
+      "origin": "native-ref",
+      "capabilities": [
+        "proof.deductive"
+      ],
+      "reference_t3_route_r4": "BLOCKED_R4",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "ORIGINAL_13_SCOPED_NATIVE_RUNTIME_INTERFACE",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "mesa",
+      "issue": 42,
+      "expected_version": "3.5.2",
+      "origin": "candidate",
+      "capabilities": [
+        "sim.agent"
+      ],
+      "reference_t3_route_r4": "ALTERNATE_WHEELHOUSE_SCOPED_PASS_R4",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "TECHNICAL_PASS_INDEPENDENT_REVIEWED_R9",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "CANDIDATE_FIXED_PORTABLE_GATE_ROUTE_SOURCE_ONLY",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "minizinc",
+      "issue": 43,
+      "expected_version": "2.10.1",
+      "origin": "candidate",
+      "capabilities": [
+        "opt.combinatorial"
+      ],
+      "reference_t3_route_r4": "ORIGINAL_TAR_RUNNER_PASS_R3",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "CANDIDATE_FIXED_PORTABLE_GATE_ROUTE_SOURCE_ONLY",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "networkx",
+      "issue": 44,
+      "expected_version": "3.7",
+      "origin": "candidate",
+      "capabilities": [
+        "graph.algorithms"
+      ],
+      "reference_t3_route_r4": "ALTERNATE_WHEELHOUSE_SCOPED_PASS_R4",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "CANDIDATE_FIXED_PORTABLE_GATE_ROUTE_SOURCE_ONLY",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "nuxmv",
+      "issue": 45,
+      "expected_version": "2.2.0",
+      "origin": "candidate",
+      "capabilities": [
+        "model.state"
+      ],
+      "reference_t3_route_r4": "LOCAL_PATCHED_FIXTURE_RUNNER_PASS_R4",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "CANDIDATE_FIXED_PORTABLE_GATE_ROUTE_SOURCE_ONLY",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": "PR86_DOCTOR_ELF_GATE_REWORK_P1"
+    },
+    {
+      "id": "ortools",
+      "issue": 46,
+      "expected_version": "9.15.6755",
+      "origin": "candidate",
+      "capabilities": [
+        "opt.combinatorial",
+        "opt.numerical"
+      ],
+      "reference_t3_route_r4": "ALTERNATE_WHEELHOUSE_SCOPED_PASS_R4",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "CANDIDATE_FIXED_PORTABLE_GATE_ROUTE_SOURCE_ONLY",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "prism",
+      "issue": 47,
+      "expected_version": "4.11",
+      "origin": "candidate",
+      "capabilities": [
+        "model.probabilistic"
+      ],
+      "reference_t3_route_r4": "ORIGINAL_TAR_RUNNER_PASS_R3",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "CANDIDATE_FIXED_PORTABLE_GATE_ROUTE_SOURCE_ONLY",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "prob",
+      "issue": 48,
+      "expected_version": "1.16.1",
+      "origin": "native-ref",
+      "capabilities": [
+        "model.state"
+      ],
+      "reference_t3_route_r4": "LOCAL_PATCHED_FIXTURE_RUNNER_PASS_R4",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "ORIGINAL_13_SCOPED_NATIVE_RUNTIME_INTERFACE",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "pymc",
+      "issue": 49,
+      "expected_version": "6.4.0",
+      "origin": "candidate",
+      "capabilities": [
+        "stats.bayesian"
+      ],
+      "reference_t3_route_r4": "ALTERNATE_WHEELHOUSE_SCOPED_PASS_R4",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "CANDIDATE_FIXED_PORTABLE_GATE_ROUTE_SOURCE_ONLY",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "rdf-shacl",
+      "issue": 50,
+      "expected_version": "0.40.2",
+      "origin": "native-ref",
+      "capabilities": [
+        "knowledge.rdf"
+      ],
+      "reference_t3_route_r4": "ALTERNATE_WHEELHOUSE_SCOPED_PASS_R4",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "ORIGINAL_13_SCOPED_NATIVE_RUNTIME_INTERFACE",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "robot",
+      "issue": 51,
+      "expected_version": "1.9.11",
+      "origin": "candidate",
+      "capabilities": [
+        "ontology.processing"
+      ],
+      "reference_t3_route_r4": "ORIGINAL_TAR_RUNNER_PASS_R3",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "CANDIDATE_FIXED_PORTABLE_GATE_ROUTE_SOURCE_ONLY",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "simpy",
+      "issue": 52,
+      "expected_version": "4.1.2",
+      "origin": "candidate",
+      "capabilities": [
+        "sim.discrete"
+      ],
+      "reference_t3_route_r4": "ALTERNATE_WHEELHOUSE_SCOPED_PASS_R4",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "CANDIDATE_FIXED_PORTABLE_GATE_ROUTE_SOURCE_ONLY",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "souffle",
+      "issue": 53,
+      "expected_version": "2.5",
+      "origin": "native-ref",
+      "capabilities": [
+        "logic.rules"
+      ],
+      "reference_t3_route_r4": "ORIGINAL_TAR_RUNNER_PASS_R3",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "ORIGINAL_13_SCOPED_NATIVE_RUNTIME_INTERFACE",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "storm",
+      "issue": 54,
+      "expected_version": "1.8.0",
+      "origin": "candidate",
+      "capabilities": [
+        "model.probabilistic"
+      ],
+      "reference_t3_route_r4": "ORIGINAL_TAR_RUNNER_PASS_R4",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "CANDIDATE_FIXED_PORTABLE_GATE_ROUTE_SOURCE_ONLY",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "sympy",
+      "issue": 55,
+      "expected_version": "1.14.0",
+      "origin": "candidate",
+      "capabilities": [
+        "math.symbolic"
+      ],
+      "reference_t3_route_r4": "ALTERNATE_WHEELHOUSE_SCOPED_PASS_R4",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "CANDIDATE_FIXED_PORTABLE_GATE_ROUTE_SOURCE_ONLY",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "tla-tlc",
+      "issue": 56,
+      "expected_version": "1.8.0",
+      "origin": "native-ref",
+      "capabilities": [
+        "model.state"
+      ],
+      "reference_t3_route_r4": "ORIGINAL_TAR_RUNNER_PASS_R3",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "ORIGINAL_13_SCOPED_NATIVE_RUNTIME_INTERFACE",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "tree-sitter",
+      "issue": 57,
+      "expected_version": "0.27.2",
+      "origin": "candidate",
+      "capabilities": [
+        "code.syntax"
+      ],
+      "reference_t3_route_r4": "ALTERNATE_CLI_SMOKE_PASS_R4",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NATIVE_CLI_POS_NEG_ERR_WRITER_RECEIPT_SOURCE_REVIEWED_NOT_ORIGINAL_PACKAGE_REBUILT",
+      "t4_interface": "CANDIDATE_FIXED_PORTABLE_GATE_ROUTE_SOURCE_ONLY",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": "ORIGINAL_PACKAGE_META_REBUILD_AND_CLI_MCP_SDK_E2E"
+    },
+    {
+      "id": "vampire",
+      "issue": 58,
+      "expected_version": "5.1.0",
+      "origin": "native-ref",
+      "capabilities": [
+        "proof.deductive"
+      ],
+      "reference_t3_route_r4": "ORIGINAL_TAR_RUNNER_PASS_R3",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "ORIGINAL_13_SCOPED_NATIVE_RUNTIME_INTERFACE",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    },
+    {
+      "id": "why3",
+      "issue": 59,
+      "expected_version": "1.8.0",
+      "origin": "candidate",
+      "capabilities": [
+        "proof.deductive"
+      ],
+      "reference_t3_route_r4": "BLOCKED_R4",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "UNSAFE_ORIGINAL_STILL_BLOCKED_PRIVATE_CHROOT_RESEARCH_ONLY",
+      "t4_interface": "CANDIDATE_FIXED_PORTABLE_GATE_ROUTE_SOURCE_ONLY",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": "SAFE_CANONICAL_PACKAGE_AND_RELOCATABLE_PROOF_RUNTIME"
+    },
+    {
+      "id": "z3",
+      "issue": 60,
+      "expected_version": "5.4.0",
+      "origin": "native-ref",
+      "capabilities": [
+        "logic.smt"
+      ],
+      "reference_t3_route_r4": "ORIGINAL_TAR_RUNNER_PASS_R3",
+      "t0": "REGISTERED_SOURCE_RIGHTS_REQUIRE_INDIVIDUAL_SCOPE",
+      "t1": "NO_NEW_REPRODUCIBLE_BUILD_CLAIM",
+      "t2": "REUSE_EXISTING_PINNED_HOST_SCOPE",
+      "t3_reviewed_technical_fixture": "NO_NEW_REVIEW_CLAIM",
+      "t3_r18_delta": "NO_T3_DELTA",
+      "t4_interface": "ORIGINAL_13_SCOPED_NATIVE_RUNTIME_INTERFACE",
+      "t4_full_accepted": false,
+      "t5_business_accepted": false,
+      "t6_final_accepted": false,
+      "pending": null
+    }
+  ]
+}
