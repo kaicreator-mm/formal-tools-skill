@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /** Node ESM CLI. Native external tools require Node host process permissions. */
-import { readFile, lstat } from "node:fs/promises";
+import { readFile, open } from "node:fs/promises";
+import { constants as fsConstants } from "node:fs";
 import { pathToFileURL } from "node:url";
 import { resolve } from "node:path";
 import { verifyPure } from "../../core/src/finite.mjs";
@@ -129,10 +130,16 @@ export async function main(args=process.argv.slice(2)) {
           throw new TypeError("portfolio invoke accepts only --model and --timeout");
         const modelFile=optString(params.model,"");
         if(!modelFile)throw new TypeError("portfolio invoke requires --model <JSON-file>");
-        const modelPath=resolve(modelFile),fileStat=await lstat(modelPath);
-        if(!fileStat.isFile()||fileStat.isSymbolicLink()||fileStat.size>65536)
-          throw new TypeError("model file must be a regular non-symlink file <=64KiB");
-        const model=JSON.parse(await readFile(modelPath,"utf8"));
+        const modelPath=resolve(modelFile);
+        if(fsConstants.O_NOFOLLOW===undefined)throw new Error("NOFOLLOW_UNAVAILABLE");
+        const modelHandle=await open(modelPath,fsConstants.O_RDONLY|fsConstants.O_NOFOLLOW);
+        let model;
+        try{
+          const fileStat=await modelHandle.stat();
+          if(!fileStat.isFile()||fileStat.size>65536)
+            throw new TypeError("model file must be a regular non-symlink file <=64KiB");
+          model=JSON.parse(await modelHandle.readFile("utf8"));
+        }finally{await modelHandle.close();}
         result=await runPortfolioOperation(tool,operation,model,{timeoutS:optNumber(params.timeout,30)});
       }
       else throw new TypeError("portfolio usage: list | describe TOOL | inspect TOOL | doctor CANDIDATE | verify CANDIDATE | invoke highs solve-lp --model model.json [--timeout N]");
