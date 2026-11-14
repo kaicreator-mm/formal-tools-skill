@@ -1,0 +1,5 @@
+(define (problem blocks-broken)
+  (:domain blocks)
+  (:objects a b - block)
+  (:init (ontable a) (ontable b) (clear a) (clear b) (handempty))
+  (:goal (on a b)
