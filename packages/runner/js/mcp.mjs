@@ -9,7 +9,7 @@ import { verifyPure } from "../../core/src/finite.mjs";
 import { knownTools, validateSource, inspectTool, doctor, runFixture } from "./native.mjs";
 import { describeNativeTool, planNative, toolIds } from "./native-catalog.mjs";
 import { inspectInstallation } from "./tool-manager.mjs";
-import { listPortfolioTools, describePortfolioTool, inspectPortfolioTool, runPortableGate } from "./tool-portfolio-t4.mjs";
+import { listPortfolioTools, describePortfolioTool, inspectPortfolioTool, runPortableGate, runPortfolioOperation } from "./tool-portfolio-t4.mjs";
 
 /** @typedef {{type:"text",text:string}} TextBlock */
 /** @type {(x:unknown)=>{content:TextBlock[]}} */
@@ -24,6 +24,17 @@ const candidateId=z.string().refine(value=>listPortfolioTools().some(t=>t.id===v
 const portfolioId=z.string().refine(value=>listPortfolioTools().some(t=>t.id===value),
   {message:"Unknown portfolio tool"});
 const toolId=z.string().refine(value=>toolIds.includes(value),{message:"Unknown registered formal tool"});
+const highsModelSchema=z.object({
+  sense:z.enum(["min","max"]),
+  objective:z.array(z.number().finite()).min(1).max(64),
+  variables:z.array(z.object({
+    lower:z.number().finite().nullable(),upper:z.number().finite().nullable()
+  }).strict()).min(1).max(64),
+  constraints:z.array(z.object({
+    lower:z.number().finite().nullable(),upper:z.number().finite().nullable(),
+    coefficients:z.array(z.number().finite()).max(64)
+  }).strict()).max(128)
+}).strict();
 serveStdio(()=>{
   const server=new McpServer({name:"formal-tools-skill",version:"0.4.0"});
   server.registerTool("list_formal_tools",{
@@ -76,6 +87,20 @@ serveStdio(()=>{
     try{
       const receipt=JSON.parse(response.content[0]?.text??"{}");
       if(receipt.status!=="FIXTURE_TECHNICAL_PASS_UNREVIEWED")return {...response,isError:true};
+    }catch{return {...response,isError:true};}
+    return response;
+  });
+  server.registerTool("run_portfolio_operation",{
+    description:"Run a registered typed candidate operation through the shared portfolio Runner. Currently only Highs 1.15.1 solve-lp is admitted; accepts a bounded LP model, never raw argv, shell, script path or arbitrary file input.",
+    inputSchema:z.object({
+      tool:z.literal("highs"),operation:z.literal("solve-lp"),model:highsModelSchema,
+      timeout_s:z.number().int().min(1).max(30).default(30)
+    })
+  },async({tool,operation,model,timeout_s})=>{
+    const response=await handle(()=>runPortfolioOperation(tool,operation,model,{timeoutS:timeout_s}));
+    try{
+      const receipt=JSON.parse(response.content[0]?.text??"{}");
+      if(receipt.status!=="T4_OPERATION_EXECUTED_UNREVIEWED")return {...response,isError:true};
     }catch{return {...response,isError:true};}
     return response;
   });
