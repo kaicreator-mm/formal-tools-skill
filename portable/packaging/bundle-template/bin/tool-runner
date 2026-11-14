@@ -276,8 +276,8 @@ ft_is_static_elf() { # $1=file -> 0 static ELF, 1 dynamic ELF, 2 not ELF/unsuppo
 ft_ldd_output_valid() { # captured ldd output -> rc 0 for recognized report
   printf '%s\n' "$1" | awk '
     /^[[:space:]]*$/ { next }
-    /^[[:space:]]*statically linked[[:space:]]*$/ { recognized++; next }
-    /^[[:space:]]*linux-vdso[.]so([.][[:digit:]]+)?[[:space:]]+\(0x[[:xdigit:]]+\)[[:space:]]*$/ { recognized++; next }
+    /^[[:space:]]*statically linked[[:space:]]*$/ { invalid=1; next } # Static must be proven by ELF header
+    /^[[:space:]]*linux-vdso[.]so([.][[:digit:]]+)?[[:space:]]+\(0x[[:xdigit:]]+\)[[:space:]]*$/ { next } # vDSO alone is not a dependency table
     /^[[:space:]]*[^[:space:]]+[[:space:]]+=>[[:space:]]+(\/[^[:space:]]+|not found)([[:space:]]+\(0x[[:xdigit:]]+\))?[[:space:]]*$/ { recognized++; next }
     /^[[:space:]]*\/[^[:space:]]+[[:space:]]+\(0x[[:xdigit:]]+\)[[:space:]]*$/ { recognized++; next }
     { invalid=1 }
