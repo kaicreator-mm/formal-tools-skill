@@ -1,0 +1,88 @@
+{
+  "schema": "formal-tools/i24-r11-nuxmv-repack-candidate/1.0",
+  "output_label": "FORMAL_TOOLS_I24_TOOL_INTEGRATION_CONTINUE",
+  "original": {
+    "drive_id": "105ZEPX-fKi2gH-ebaaJg-1V4bs-Ksmxn",
+    "name": "nuxmv-2.2.0-linux-x86_64.tar.zst",
+    "sha256": "75ef7e5c33a68849e84dc8e7ac784b8aee62d6e8c7ffe20ebda8c4b0797df41b",
+    "canonical_sha_match": true,
+    "original_meta_key": "TOOL_TOOL_ID=nuxmv",
+    "size_compressed": 19728969
+  },
+  "candidate": {
+    "drive_id": "1yjneRDGdgF5MAob2SKiCr3l3ZqqPe_wJ",
+    "url": "https://drive.google.com/file/d/1yjneRDGdgF5MAob2SKiCr3l3ZqqPe_wJ/view?usp=drivesdk",
+    "name": "nuxmv-2.2.0-meta-corrected-CANDIDATE.tar.zst",
+    "sha256": "2d7b2f0037a043c35616198e2ee916a88d48e3abf54b99e6709c911a78b2b777",
+    "bytes": 46602277,
+    "tar_entries": 39,
+    "unsafe_symlinks": 0,
+    "zstd_integrity": true,
+    "sha_after_authenticated_drive_readback_match": true,
+    "regular_files_compared": 33,
+    "changed_files_only": [
+      "tools/nuxmv/meta.sh"
+    ],
+    "corrected_meta_key": "TOOL_ID=nuxmv",
+    "packaging_method": "--sort=name --mtime=@0 --owner=0 --group=0 --numeric-owner | zstd -5 -T2",
+    "is_official_package": false,
+    "canonical_App_packages_updated": false,
+    "archive_header_differences": {
+      "audit": "independent comparison of original and candidate tar member headers, fresh Debian13 extraction metadata inspection",
+      "entries_total": 39,
+      "regular_payload_bytes_differ_only": [
+        "tools/nuxmv/meta.sh"
+      ],
+      "mode_changes": 39,
+      "original_modes": [
+        "0755",
+        "0644"
+      ],
+      "candidate_modes": [
+        "0555",
+        "0444"
+      ],
+      "mtime_changes": 39,
+      "uid_changes": 0,
+      "gid_changes": 0,
+      "archive_entry_path_set_equal": true,
+      "note": "Prior 'changed_files_only' describes decompressed ordinary file content differences ONLY; the candidate also normalizes mode and mtime on all entries. It is intentionally validation-only and not byte/metadata equivalent to the original tar."
+    }
+  },
+  "clean_nonroot_host": {
+    "os": "Debian13 x86_64",
+    "user": "nobody",
+    "tool_payload_root_owned_and_nonwritable": true,
+    "runner_source": "PR79 unmerged exact staged Git blob 0f9e1f7d5f07c3dafaaba59cc08a0beaff944a99",
+    "fixtures_source": "PR81 exact Git blob 24e670e3420afa61c800396d5b5154b8bd1a3898",
+    "doctor_exit": 0,
+    "version_exit": 0,
+    "version_reported": "2.2.0",
+    "verify_exit": 0,
+    "phase_exits": {
+      "pos": 0,
+      "neg": 0,
+      "err": 1
+    },
+    "tsv_schema": "formal-tools/portable-verify/0.2",
+    "tsv_sha256": "876e7eb554d9cad34fdea1a6d04c40b1206023562c5d039a1e637f990b80aa7c",
+    "test_outcome": "3PHASE_NATIVE_TECHNICAL_PASS_UNREVIEWED"
+  },
+  "previous_raw_receipts": {
+    "zip_drive_url": "https://drive.google.com/file/d/18JllviN3GF86ocNhLIkCy8k9NUmaeyQA/view?usp=drivesdk",
+    "sha256": "661fccef52e9fbf39c76f6e3c3940cfda69b65dc8ab2efdef884937cad86d0d6"
+  },
+  "qualification": {
+    "original_unchanged": true,
+    "partial_T3_technical": true,
+    "hermetic_python_runtime_not_needed_for_this_native_binary": true,
+    "requires_PR79_runner_merge": true,
+    "requires_PR81_fixture_merge": true,
+    "requires_independent_source_review": true,
+    "full_shared_cli_mcp_sdk_host_not_tested": true,
+    "formal_T4_qualified": false,
+    "T5_qualified": false,
+    "do_not_promote_to_canonical": true,
+    "p2_candidate_archive_metadata_disclosed": true
+  }
+}

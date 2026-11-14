@@ -1,0 +1,68 @@
+{
+  "schema": "formal-tools/i24-highs1151-repack-candidate/1.0",
+  "output_label": "FORMAL_TOOLS_I24_TOOL_INTEGRATION_CONTINUE",
+  "branch": "fix/i24-highs-1151-native-error-r10",
+  "source_main_base": "9edcb4c2698ef9733215a8281962268152a7eab9",
+  "original": {
+    "file": "highs-1.15.1-linux-x86_64.tar.zst",
+    "drive_id": "19SGQTJynASZc3-wgIHG5PqMVdHCHtOV_",
+    "bytes": 2284374,
+    "sha256": "ea0a12198f986f9fd03c7a29525d7f93c64e39c51525492bf3fc37e0bc7815a2",
+    "canonical_manifest_match": true,
+    "meta_sh_sha256": "e30ee630c0b0abe4ec31a264a8c89e6ce390e0b9a9ec39212e28b68ed7f0f184",
+    "defect": "TOOL_TOOL_ID=highs instead of TOOL_ID=highs"
+  },
+  "candidate": {
+    "file": "highs-1.15.1-meta-corrected-CANDIDATE.tar.zst",
+    "drive_id": "1Qt7t7udgyvUMi6yajl0Ro59vMmfjT48R",
+    "url": "https://drive.google.com/file/d/1Qt7t7udgyvUMi6yajl0Ro59vMmfjT48R/view?usp=drivesdk",
+    "folder": "App/10-formal-tools/validation/receipts",
+    "bytes": 2288063,
+    "sha256": "baab9138a6e86ee22afec7749ebf83d8a2055177d5c700e4c07d4c1ea3a2e5a5",
+    "verified_after_drive_readback": true,
+    "zstd_integrity": "PASS",
+    "meta_sh_sha256": "a25f88338060c73488c40c51e910da2c50ad391cc489ccadff8b530d6f403b14",
+    "changed_payload_files": [
+      "tools/highs/meta.sh"
+    ],
+    "verified_all_23_regular_files_byte_match_to_staged_original_except_meta": true,
+    "packaging_method": "tar --sort=name --mtime=@0 --owner=0 --group=0 --numeric-owner | zstd -19 -T2",
+    "is_official_release": false
+  },
+  "clean_host": {
+    "os": "Debian13 x86_64",
+    "nonroot_user": "nobody",
+    "bundle_root_owned": true,
+    "tools_present": [
+      "highs"
+    ],
+    "python_runtime": "test-only host CPython3.13 shim; NOT authenticated 294MB original hermetic Python tar",
+    "runner_git_blob": "b7efaf24948d4ea0d5babde71ac96b3755f1bda4",
+    "doctor_rc": 0,
+    "version_rc": 0,
+    "version_output": "1.15.1",
+    "verify_rc": 0,
+    "verify_schema": "formal-tools/portable-verify/0.2",
+    "actual_phase_exits": {
+      "pos": 0,
+      "neg": 0,
+      "err": 3
+    },
+    "positive_objective": 4,
+    "negative_status": "kInfeasible",
+    "error_status": "kError",
+    "receipt_sha256": "8f174f874e01287d73c46b2e88cb190459ae3870356603ba0787d7e70082cd8b"
+  },
+  "provenance": {
+    "raw_original_and_repair_logs": "https://drive.google.com/file/d/1evX7tTRR5g8XGbIcxPBPpJpvr66BRuiB/view?usp=drivesdk",
+    "raw_sha256": "d3f9ac86c7071352189893932cbb4d2a95c1c091b5ee564d258839e908107a45",
+    "source_pr": 79
+  },
+  "limits": [
+    "This candidate is in validation/receipts, not promoted to canonical App/packages; original package remains unchanged and its version contract FAILS",
+    "Native source package may require original portable CPython3.13 archive to be considered hermetic; host shims are test-only",
+    "No actual original project's full CLI/MCP/SDK host E2E for HiGHS",
+    "Independent non-Writer exact-SHA Source-First review, Woodpecker dual CI, full packaging manifest/release admission required before formal T4",
+    "New candidate fully independent T4=0 and semantic T5=0"
+  ]
+}

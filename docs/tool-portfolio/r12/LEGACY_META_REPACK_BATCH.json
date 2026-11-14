@@ -1,0 +1,204 @@
+{
+  "schema": "formal-tools/i24-r12-four-legacy-metadata-repacks/1.0",
+  "output_label": "FORMAL_TOOLS_I24_TOOL_INTEGRATION_CONTINUE",
+  "scope": "Four existing immutable original tool archives had old TOOL_TOOL_ID aliases. Only metadata-only CANDIDATE archives produced, no official replacement, no new full native T4 admission.",
+  "original_main_at_creation": "9edcb4c2698ef9733215a8281962268152a7eab9",
+  "source_runner_pr": 79,
+  "source_runner_exact_blob": "0f9e1f7d5f07c3dafaaba59cc08a0beaff944a99",
+  "host": "Debian13 x86_64, nonroot nobody; isolated root-owned canonical-tool payloads; Java21 provided by separate SHA-verified original runtime symlink for ELK; no hermetic SDK/MCP/CLI claim.",
+  "archive": {
+    "file": "formal-tools-i24-r12-four-metadata-candidates.zip",
+    "drive_file_id": "1BB8gPzhd5gJxIOWRbi5WarUUMb-W-Z3z",
+    "drive_url": "https://drive.google.com/file/d/1BB8gPzhd5gJxIOWRbi5WarUUMb-W-Z3z/view?usp=drivesdk",
+    "bytes": 42179341,
+    "sha256": "cc7d09aadcd2b55e707470afd361a686158b52163f2642ab2cc2b44e4e3cfb5b",
+    "zip_members": 13,
+    "crc_pass": true,
+    "readback_size_verified": true,
+    "sha_verified_after_download": true
+  },
+  "tools": [
+    {
+      "id": "aflpp",
+      "version": "5.03c",
+      "issue": 25,
+      "original_sha256": "728a9e2cdd38704b1270c478fccfe476e012bbb866b61c9984d274bd8a8cf157",
+      "candidate_sha256": "58bb156f6d68ef8fc36ad27e397e47c26ea9460d5fc288e4cfb37e59d8cc7f96",
+      "candidate_bytes": 3924678,
+      "tar_entries": 45,
+      "safe_tar": true,
+      "regular_files_compared": 40,
+      "verified_exact_difference_only": "tools/aflpp/meta.sh",
+      "original_meta_key": "TOOL_TOOL_ID=aflpp",
+      "candidate_meta_key": "TOOL_ID=aflpp",
+      "nonroot_candidate_doctor_exit": 0,
+      "nonroot_candidate_version_exit": 0,
+      "original_native_pos_neg_err_retest_in_this_R12": false,
+      "t4_qualified": false,
+      "t5_qualified": false
+    },
+    {
+      "id": "cbmc",
+      "version": "6.11.0",
+      "issue": 30,
+      "original_sha256": "eaa049099a7a515631b4c82699b264e4bea1e677d9f65e8374cf212d30306369",
+      "candidate_sha256": "1efaa27f28b46118855aa0d6c63b1e980767450ec933c18f4904a92daecdb6b3",
+      "candidate_bytes": 27145366,
+      "tar_entries": 27,
+      "safe_tar": true,
+      "regular_files_compared": 18,
+      "verified_exact_difference_only": "tools/cbmc/meta.sh",
+      "original_meta_key": "TOOL_TOOL_ID=cbmc",
+      "candidate_meta_key": "TOOL_ID=cbmc",
+      "nonroot_candidate_doctor_exit": 0,
+      "nonroot_candidate_version_exit": 0,
+      "original_native_pos_neg_err_retest_in_this_R12": false,
+      "t4_qualified": false,
+      "t5_qualified": false
+    },
+    {
+      "id": "elk",
+      "version": "0.6.0",
+      "issue": 35,
+      "original_sha256": "c98892d52e46a03a6e2c354cf7cc78b9f0c3d9dfb8b24a9cfa3e00e226b12fdf",
+      "candidate_sha256": "19bd813e936ab020cda42a4968c466432dce9a60f0a665aa2ddc360220e4d87e",
+      "candidate_bytes": 10948120,
+      "tar_entries": 16,
+      "safe_tar": true,
+      "regular_files_compared": 14,
+      "verified_exact_difference_only": "tools/elk/meta.sh",
+      "original_meta_key": "TOOL_TOOL_ID=elk",
+      "candidate_meta_key": "TOOL_ID=elk",
+      "nonroot_candidate_doctor_exit": 0,
+      "nonroot_candidate_version_exit": 0,
+      "original_native_pos_neg_err_retest_in_this_R12": false,
+      "t4_qualified": false,
+      "t5_qualified": false
+    },
+    {
+      "id": "fast-check",
+      "version": "4.10.2",
+      "issue": 36,
+      "original_sha256": "781ccef57d6249d08b347356eec82c6c44822a3107c01a1048a80f112d77a128",
+      "candidate_sha256": "92c1f46ce21db223c0b8de1bf609e0225e24f1faab89980827b746e42749400b",
+      "candidate_bytes": 153100,
+      "tar_entries": 90,
+      "safe_tar": true,
+      "regular_files_compared": 72,
+      "verified_exact_difference_only": "tools/fast-check/meta.sh",
+      "original_meta_key": "TOOL_TOOL_ID=fast-check",
+      "candidate_meta_key": "TOOL_ID=fast-check",
+      "nonroot_candidate_doctor_exit": 0,
+      "nonroot_candidate_version_exit": 0,
+      "original_native_pos_neg_err_retest_in_this_R12": false,
+      "t4_qualified": false,
+      "t5_qualified": false
+    }
+  ],
+  "boundaries": [
+    "Original approved SHA256SUMS files unchanged; candidates isolated under Drive validation/receipts, not App/packages",
+    "Only doctor/version were tested in this increment; unchanged R3/R4/PR22 native fixture receipts remain scoped to their own original identities",
+    "ELK doctor uses staged original Java21 runtime; node-lib fast-check doctor only validates metadata and does not independently prove node module version/ABI/host installation",
+    "Do not infer that all 36 artifacts have the bad legacy metadata alias; only five other verified assets previously scoped and these four directly checked",
+    "Original source T4 candidate admission still requires official repack, full candidate Gateway/CLI/MCP/SDK host, new exact SHA CI and distinct Source-First review"
+  ],
+  "r13_addendum": {
+    "schema": "formal-tools/i24-r13-repair-addendum/1.0",
+    "output_label": "FORMAL_TOOLS_I24_R13_P1_P2_REPAIR_CLOSEOUT",
+    "date": "2026-11-14",
+    "source_pr": 79,
+    "scope": "Adds the tar-header metadata disclosure required by the independent R12 incremental review (P2-01) and records runner supersession. Does not rewrite any R12 historical receipt, hash, or claim recorded above.",
+    "verified_exact_difference_only_scope": {
+      "meaning": "Applies to REGULAR PAYLOAD BYTES and ARCHIVE PATH SETS only: all regular files compare byte-identical to the staged original except tools/<id>/meta.sh (TOOL_TOOL_ID -> TOOL_ID rename).",
+      "excludes": "Tar header metadata (per-entry mode, mtime, uid, gid) and archive ordering. Candidate repacks regenerate tar headers, so original vs candidate archives differ at the header level even where payload bytes match; the payload-only claim above does not assert header equality.",
+      "established_header_discipline_reference": "docs/tool-portfolio/r10/CANDIDATE_PACKAGE.json records the R10 candidate packaging method: tar --sort=name --mtime=@0 --owner=0 --group=0 --numeric-owner (deterministic epoch mtime, uid/gid 0). This R12 batch JSON did not record an equivalent packaging method or per-entry header table; that omission is the P2-01 gap disclosed here.",
+      "r13_attempt": "R13 attempted to re-derive per-entry mode/mtime/uid/gid tables from the pinned candidate artifacts (R12 ZIP cc7d09aadcd2b55e707470afd361a686158b52163f2642ab2cc2b44e4e3cfb5b, R10 HiGHS candidate baab9138a6e86ee22afec7749ebf83d8a2055177d5c700e4c07d4c1ea3a2e5a5, R11 nuXmv candidate Drive id 1yjneRDGdgF5MAob2SKiCr3l3ZqqPe_wJ); every Drive fetch was rejected (gdown rate-limit 'many accesses' / non-public-link refusal, with and without cached cookies, from two networks, 2026-11-14). Original archives were NOT re-downloaded (R13 brief constraint: originals stay immutable). Per-entry header tables therefore remain UNDISCLOSED in-repo.",
+      "required_before_further_use": [
+        "Extract per-entry mode/mtime/uid/gid for the four candidate archives from the pinned R12 ZIP (or record the exact packaging method that determines them, following the R10 pattern) into this file.",
+        "Apply the same disclosure to the nuXmv candidate recorded under PR #81 before its review.",
+        "Rebuild the candidates with the fixed R13 runner (see runner_supersession) before any doctor/version/verify observation is reused for admission."
+      ]
+    },
+    "runner_supersession": {
+      "r12_pinned_runner_blob": "0f9e1f7d5f07c3dafaaba59cc08a0beaff944a99",
+      "r13_fixed_runner_blob": "102e971481a3e213fdb41fa45230b1dd3beaf2bd",
+      "fixes": [
+        "P1: unsafe tool IDs (traversal, absolute, separator, dot-segment) are rejected by a strict [A-Za-z0-9._-] no-leading-dot allowlist before any filesystem path is constructed, sourced, executed, or used in a receipt filename; sourced/executed bundle files (meta.sh, expect.sh, run shim, private lib dir) are symlink-contained inside tools/<id>/ (or tests/<id>/).",
+        "P1 hardening: containment resolves physical paths with readlink -f (GNU and busybox compatible) plus a bounded pure-shell fallback, after busybox realpath (CI agent image) proved incompatible with realpath -e/--.",
+        "P2-02: doctor ldd probe is fail-closed — a nonzero ldd exit or an empty dependency listing is reported as probe FAILED, never as 'no missing libs OK'."
+      ],
+      "node_regression": "tests/tool-portable-metadata.test.mjs 11/11 (6 pre-existing + 5 new adversarial: traversal/absolute/dot-segment IDs, meta.sh/run-shim/expect.sh symlink escapes, ldd probe failure modes) and tests/portable-tool-runner.test.mjs 5/5 (4 pre-existing + 1 new: non-executable run shim is SKIP for verify and exit 126 for run). Verified on GNU Linux (WSL2) and inside the actual CI agent container image (busybox realpath environment where the first containment attempt false-rejected everything; 16/16 after the readlink fix); Windows-local runs of the metadata suite have a pre-existing cygwin path-semantics failure in the sixth test that also fails on the R12 runner blob and is out of CI scope.",
+      "impact_on_r12_candidates": "The four R12 candidates (and the R10/R11 candidates) were produced and validated under the R12 runner blob. R12 doctor/version exit observations remain valid only for that blob. The fixed runner's stricter ID validation does not alter healthy-tool doctor/version behavior (all pre-existing Node cases pass unchanged), but candidates must be rebuilt with the fixed runner before any further admission use."
+    },
+    "header_evidence_closeout": {
+      "status": "P2_01_CLOSED_SCOPED",
+      "evidence_file": "docs/tool-portfolio/r13/CANDIDATE_TAR_HEADERS.json",
+      "evidence_blob": "8f8cd8e84a3ab59aa69ad34a408cb61e8fe3a0bb",
+      "candidate_archives": 6,
+      "candidate_tar_entries": 247,
+      "uniform_header_fields_for_every_entry": {
+        "mtime_epoch_seconds": 0,
+        "mtime_utc": "1970-01-01T00:00:00Z",
+        "uid": 0,
+        "gid": 0
+      },
+      "per_archive_mode_counts": {
+        "highs-1.15.1": {
+          "0755": 11,
+          "0644": 19
+        },
+        "nuxmv-2.2.0": {
+          "0555": 12,
+          "0444": 27
+        },
+        "aflpp-5.03c": {
+          "0755": 7,
+          "0775": 1,
+          "0664": 32,
+          "0644": 5
+        },
+        "cbmc-6.11.0": {
+          "0755": 14,
+          "0777": 3,
+          "0644": 10
+        },
+        "elk-0.6.0": {
+          "0755": 3,
+          "0644": 13
+        },
+        "fast-check-4.10.2": {
+          "0755": 19,
+          "0644": 71
+        }
+      },
+      "archive_sha256": {
+        "highs-1.15.1": "baab9138a6e86ee22afec7749ebf83d8a2055177d5c700e4c07d4c1ea3a2e5a5",
+        "nuxmv-2.2.0": "2d7b2f0037a043c35616198e2ee916a88d48e3abf54b99e6709c911a78b2b777",
+        "aflpp-5.03c": "58bb156f6d68ef8fc36ad27e397e47c26ea9460d5fc288e4cfb37e59d8cc7f96",
+        "cbmc-6.11.0": "1efaa27f28b46118855aa0d6c63b1e980767450ec933c18f4904a92daecdb6b3",
+        "elk-0.6.0": "19bd813e936ab020cda42a4968c466432dce9a60f0a665aa2ddc360220e4d87e",
+        "fast-check-4.10.2": "92c1f46ce21db223c0b8de1bf609e0225e24f1faab89980827b746e42749400b"
+      },
+      "readback": {
+        "r12_zip_sha256": "cc7d09aadcd2b55e707470afd361a686158b52163f2642ab2cc2b44e4e3cfb5b",
+        "r12_zip_bytes": 42179341,
+        "highs_drive_id": "1Qt7t7udgyvUMi6yajl0Ro59vMmfjT48R",
+        "nuxmv_drive_id": "1yjneRDGdgF5MAob2SKiCr3l3ZqqPe_wJ",
+        "no_original_tool_archives_downloaded": true,
+        "original_App_packages_modified": false
+      },
+      "method": "Authenticated readback of only the already-pinned candidate archives; SHA256, zstd integrity and tar headers verified read-only. R12 ZIP CRC/manifest retained. Per-entry path/type/mode tables plus common mtime/uid/gid values are in the evidence file.",
+      "qualification_boundary": "Header evidence closes the documentation P2 only. These six candidates remain noncanonical; old doctor/version receipts are bound to the R12 Runner. Rebuild under R13 Runner before any further candidate admission use. No T4/T5/Product/Release promotion.",
+      "entry_count_validation": "All six per-entry path/mode arrays were machine-checked against the tar header entry counts: 30/30, 39/39, 45/45, 27/27, 16/16, 90/90 (247/247 total)."
+    },
+    "required_before_further_use": [
+      "COMPLETED: extract per-entry mode/mtime/uid/gid for the four R12 candidates plus R10 HiGHS and R11 nuXmv candidates; see docs/tool-portfolio/r13/CANDIDATE_TAR_HEADERS.json.",
+      "COMPLETED: disclose the nuXmv candidate mode/mtime/uid/gid normalization in PR #81 docs/r11/CANDIDATE_PACKAGE.json and README.",
+      "OPEN: rebuild the six metadata-only candidates with the fixed R13 Runner before any future doctor/version/verify observation is reused for admission."
+    ],
+    "verified_header_evidence_fetch": {
+      "prior_attempt": "The earlier R13 direct-fetch attempt was rate-limited; this historical attempt remains recorded above.",
+      "successful_follow_up": "Authenticated Google Drive connector readback succeeded for the three already-pinned candidate artifacts (R12 candidate ZIP, R10 HiGHS candidate, R11 nuXmv candidate); no original tool archive was re-downloaded."
+    }
+  }
+}

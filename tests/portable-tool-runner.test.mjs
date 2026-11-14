@@ -72,3 +72,19 @@ test("failed mandatory setup cannot be hidden by a passing positive case", { ski
     assert.doesNotMatch(f.receipt(), /mock\tpos/);
   } finally { f.cleanup(); }
 });
+
+test("non-executable run shim is SKIP for verify and exit 126 for run, never PASS", { skip: !onLinux }, () => {
+  const f = fixture("echo SAT; exit 0", EXPECT_POS);
+  chmodSync(join(f.root, "tools/mock/run"), 0o644);
+  try {
+    const p = f.run();
+    assert.equal(p.status, 1, p.stderr);
+    assert.match(f.receipt(), /verdict\tSKIP/);
+    assert.doesNotMatch(f.receipt(), /mock\tpos/);
+    const r = spawnSync("bash", [join(f.root, "bin/tool-runner"), "run", "mock"], {
+      cwd: f.root, encoding: "utf8", timeout: 15_000,
+      env: { ...process.env, FT_EVIDENCE_DIR: join(f.root, "evidence") }
+    });
+    assert.equal(r.status, 126, `run rc=${r.status} err=${r.stderr}`);
+  } finally { f.cleanup(); }
+});

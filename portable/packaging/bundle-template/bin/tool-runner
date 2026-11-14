@@ -12,6 +12,9 @@
 set -uo pipefail
 
 FT_ROOT="$(cd "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+# Physical (symlink-resolved) bundle root: containment checks compare physical
+# paths so a symlinked deployment cannot smuggle paths outside the bundle.
+FT_ROOT_P="$(cd -P -- "$FT_ROOT" 2>/dev/null && pwd -P)" || FT_ROOT_P="$FT_ROOT"
 FT_EV="${FT_EVIDENCE_DIR:-$FT_ROOT/evidence}"
 FT_TMP="$(mktemp -d /tmp/ft-XXXXXX)"
 export FT_TMP
@@ -39,16 +42,78 @@ py_env() {
   [ -d "$FT_TMP/mpl" ] || mkdir -p "$FT_TMP/mpl"
 }
 
+# A tool ID must be a single safe path component before it is ever used to
+# build, source, execute, or write a path: [A-Za-z0-9._-]+ without a leading
+# dot. This rejects traversal (../..), separators, absolute paths, and
+# dot-segments up front — no filesystem path is constructed for unsafe IDs.
+ft_safe_id() {
+  case "$1" in
+    ''|.*|*[!A-Za-z0-9._-]*) return 1 ;;
+  esac
+  return 0
+}
+
+# Resolve a bundle file to its physical path and require it to stay inside the
+# given physical directory prefix (symlink containment for sourced/executed
+# bundle content). Primary resolver is readlink -f (GNU and busybox both
+# support it; busybox realpath does NOT support -e/--). Fallback resolves the
+# containing directory with pure shell and walks a final symlink manually,
+# failing closed on unresolved chains.
+ft_path_under() { # file prefix -> rc
+  local r
+  r=$(readlink -f "$1" 2>/dev/null) || true
+  if [ -z "$r" ]; then
+    local d b t hop=0
+    d=$(cd -- "$(dirname -- "$1")" 2>/dev/null && pwd -P) || return 1
+    b=$(basename -- "$1")
+    r="$d/$b"
+    while [ -L "$r" ] && [ "$hop" -lt 10 ]; do
+      t=$(readlink "$r") || return 1
+      case "$t" in
+        /*) r="$t" ;;
+        *) r="$d/$t" ;;
+      esac
+      d=$(cd -- "$(dirname -- "$r")" 2>/dev/null && pwd -P) || return 1
+      r="$d/$(basename -- "$r")"
+      hop=$((hop + 1))
+    done
+    [ -L "$r" ] && return 1 # unresolved symlink chain: fail closed
+  fi
+  [ -n "$r" ] || return 1
+  case "$r" in
+    "$2"*) return 0 ;;
+  esac
+  return 1
+}
+
 tool_meta() { # id -> sources meta.sh into env
+  if ! ft_safe_id "$1"; then
+    echo "invalid tool id: $1 (must be a single [A-Za-z0-9._-] component without leading dot)" >&2
+    return 2
+  fi
   local m="$FT_ROOT/tools/$1/meta.sh"
   [ -f "$m" ] || { echo "unknown tool: $1 (no meta)" >&2; return 1; }
+  # Symlink containment: the physical meta.sh must live inside the bundle's
+  # tools/<id>/ directory; refuse sourced content that resolves outside.
+  if ! ft_path_under "$m" "$FT_ROOT_P/tools/$1/"; then
+    echo "invalid tool location: $1 (meta.sh resolves outside tools/$1)" >&2
+    return 2
+  fi
+  # Prevent inherited/stale environment keys from masking broken bundle metadata.
+  # Historical TOOL_TOOL_ID was a packaging bug, never a valid identity alias.
+  unset TOOL_ID TOOL_VERSION TOOL_KIND TOOL_MAIN_BIN TOOL_GLIBC_MAX TOOL_ELF_ARCH TOOL_VERSION_OUTPUT UNAVAILABLE
   # shellcheck disable=SC1090
-  . "$m"
+  . "$m" || return 1
+  if [ "${TOOL_ID:-}" != "$1" ] || [ -z "${TOOL_VERSION:-}" ] || [ -z "${TOOL_KIND:-}" ]; then
+    echo "invalid tool metadata: $1 (TOOL_ID/version/kind missing or mismatched)" >&2
+    return 1
+  fi
 }
 
 list_ids() { for f in "$FT_ROOT"/tools/*/meta.sh; do [ -f "$f" ] && basename "$(dirname "$f")"; done | sort; }
 
 trow() { # verify TSV row: id phase exit duration_ms matched exit_ok label
+  ft_safe_id "$1" || { echo "bad receipt id: $1" >&2; return 2; }
   printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "$1" "$2" "$3" "$4" "$5" "$6" "$7" >> "$FT_EV/verify-$1.tsv"
 }
 
@@ -115,6 +180,12 @@ verify_one() {
     printf 'verdict\tSKIP\n' >> "$FT_EV/verify-$id.tsv"
     return 1 # no executed cases => never PASS at verify-all
   fi
+  # Symlink containment: a sourced expect.sh must physically live in tests/<id>/.
+  if ! ft_path_under "$ef" "$FT_ROOT_P/tests/$id/"; then
+    echo "verify: $id FAIL (expect.sh resolves outside tests/$id)" >&2
+    printf 'verdict\tFAIL\n' >> "$FT_EV/verify-$id.tsv"
+    return 1
+  fi
   VID="$id"
   # isolate judgment contracts: expect vars leak across tools when verifying many
   # tools in one process (single-container deployments)
@@ -159,9 +230,34 @@ doctor_one() {
   if [ -n "${TOOL_MAIN_BIN:-}" ]; then
     if [ -f "$FT_ROOT/$TOOL_MAIN_BIN" ]; then
       echo "  binary: $TOOL_MAIN_BIN OK (glibc_max=${TOOL_GLIBC_MAX:-n/a})"
-      local miss
-      miss=$(ldd "$FT_ROOT/$TOOL_MAIN_BIN" 2>&1 | grep -c "not found" || true)
-      if [ "${miss:-0}" != 0 ]; then echo "  ldd missing libs: $miss FAIL"; fails=1; else echo "  ldd: no missing libs OK"; fi
+      # Match the tool's run shim: native solvers ship private shared libraries.
+      # ldd without the tool lib path falsely flags ICU/libstdc++ as missing.
+      local tool_lib="$FT_ROOT/tools/$id/lib"
+      local miss ldd_out ldd_rc
+      if [ -d "$tool_lib" ]; then
+        # Symlink containment: a private lib dir must stay inside tools/<id>/.
+        if ! ft_path_under "$tool_lib" "$FT_ROOT_P/tools/$id/"; then
+          echo "  private lib dir escapes tools/$id FAIL"; fails=1
+        else
+          ldd_out=$(LD_LIBRARY_PATH="$tool_lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" ldd "$FT_ROOT/$TOOL_MAIN_BIN" 2>&1); ldd_rc=$?
+        fi
+      else
+        ldd_out=$(ldd "$FT_ROOT/$TOOL_MAIN_BIN" 2>&1); ldd_rc=$?
+      fi
+      if [ -z "${ldd_out+x}" ]; then
+        : # lib-dir containment already failed and marked the tool; no ldd judgment
+      else
+        # Fail closed: an ldd probe that did not run (nonzero rc) or produced
+        # no dependency listing is never treated as "no missing libs".
+        miss=$(printf '%s\n' "${ldd_out:-}" | grep -c "not found" || true)
+        if [ "${miss:-0}" != 0 ]; then
+          echo "  ldd missing libs: $miss FAIL"; fails=1
+        elif [ "${ldd_rc:-1}" != 0 ] || [ -z "${ldd_out:-}" ]; then
+          echo "  ldd probe FAILED (rc=${ldd_rc:-?}, no dependency listing)"; fails=1
+        else
+          echo "  ldd: no missing libs OK"
+        fi
+      fi
       [ "$(uname -m)" = x86_64 ] || { echo "  arch: host not x86_64 FAIL"; fails=1; }
     else
       echo "  binary MISSING: $TOOL_MAIN_BIN"; fails=1
@@ -204,7 +300,12 @@ case "$cmd" in
     else verify_one "$2"; fi ;;
   run)
     id="${2:?usage: tool-runner run <id> [args...]}"; shift 2
-    tool_meta "$id"
+    tool_meta "$id" || exit 2
+    # Symlink containment: the executed run shim must physically live in tools/<id>/.
+    if ! ft_path_under "$FT_ROOT/tools/$id/run" "$FT_ROOT_P/tools/$id/"; then
+      echo "invalid tool entry: $id (run resolves outside tools/$id)" >&2
+      exit 2
+    fi
     exec "$FT_ROOT/tools/$id/run" "$@" ;;
   py)
     shift; py_env; exec "$FT_ROOT/runtimes/python313/bin/python3.13" -s "$@" ;;
@@ -213,7 +314,8 @@ case "$cmd" in
   java)
     shift; export JAVA_HOME="$FT_ROOT/runtimes/java21"; export PATH="$JAVA_HOME/bin:$PATH"; exec java "$@" ;;
   version)
-    tool_meta "${2:?}"; echo "tool: ${TOOL_ID}"; echo "version: ${TOOL_VERSION}"; echo "probe: ${TOOL_VERSION_OUTPUT:-n/a}" ;;
+    tool_meta "${2:?}" || exit 2
+    echo "tool: ${TOOL_ID}"; echo "version: ${TOOL_VERSION}"; echo "probe: ${TOOL_VERSION_OUTPUT:-n/a}" ;;
   *)
     sed -n '2,14p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; exit 0 ;;
 esac
