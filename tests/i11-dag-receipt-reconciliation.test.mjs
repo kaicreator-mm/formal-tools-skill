@@ -53,6 +53,14 @@ const checkDag=d=>{
   assert.equal(d.status,'G0_G2_ACCEPTED_G3_G6_ENGINEERING_SCOPED_FULL_QUALIFICATION_BLOCKED');
   assert.equal(d.reconciliation.controller_issue,11);
   assert.match(d.reconciliation.reconciled_against_main_sha,/^[a-f0-9]{40}$/);
+  // Raw array cardinality/uniqueness MUST be checked before Object.fromEntries.
+  // Otherwise last-wins can erase a forged first G6 FULL_ACCEPTED or rewired edge.
+  assert.equal(d.gates.length,8,'raw gate count must be exactly 8');
+  assert.equal(d.tasks.length,13,'raw task count must be exactly 13');
+  const gateIds=d.gates.map(g=>g.id);
+  const taskIds=d.tasks.map(t=>t.id);
+  assert.equal(new Set(gateIds).size,gateIds.length,'duplicate raw gate ID');
+  assert.equal(new Set(taskIds).size,taskIds.length,'duplicate raw task ID');
   const gates=index(d.gates),tasks=index(d.tasks);
   assert.deepEqual(Object.keys(gates).sort(),Object.keys(expectedGateDeps).sort());
   assert.deepEqual(Object.keys(tasks).sort(),Object.keys(expectedTaskDeps).sort());
@@ -91,7 +99,15 @@ test('R21 adversarial false qualification and hidden DAG rewiring fail closed',(
     d=>{index(d.gates).G5.status='FULL_ACCEPTED';},
     d=>{index(d.gates).G6.status='NOT_STARTED';},
     d=>{index(d.tasks)['T-G6-01'].depends_on=[];},
-    d=>{index(d.gates).G6.depends_on=[];}
+    d=>{index(d.gates).G6.depends_on=[];},
+    // Three independent duplicate-ID adversarial mutants from R22 review:
+    // last-wins map would silently overwrite these forged first raw entries.
+    d=>{d.tasks.unshift({...structuredClone(index(d.tasks)['T-G6-01']),
+      status:'FULL_ACCEPTED'});},
+    d=>{d.gates.unshift({...structuredClone(index(d.gates).G6),
+      status:'FULL_ACCEPTED'});},
+    d=>{d.tasks.unshift({...structuredClone(index(d.tasks)['T-G6-01']),
+      depends_on:[]});}
   ]){
     const corrupted=structuredClone(dag);mutate(corrupted);
     assert.throws(()=>checkDag(corrupted));
