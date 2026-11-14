@@ -46,8 +46,8 @@ merged main `7b97821aeeae2042cff63738c37d17bd54dd55cf`.
 
 Host: real Linux/x64 (`Linux 6.18.58.1-microsoft-standard-WSL2` x86_64,
 same WSL2 execution class as the R17 receipt), Node **v24.21.0**, fresh
-durable G4 store `/home/cc/g6-store-r20` on ext4 (owner `cc`, mode 0700
-files), original domain-harness checkout verified clean (0 porcelain lines)
+durable G4 store `/home/cc/g6-store-r20` on ext4 (owner `cc`, store files
+mode 0600), original domain-harness checkout verified clean (0 porcelain lines)
 before and after the run, formal-tools checkout clean (0 porcelain lines)
 at `7b97821…`.
 
