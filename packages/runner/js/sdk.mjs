@@ -9,7 +9,7 @@ import { scanArtifactWorkspace,collectGeneratedArtifacts } from "./artifact-coll
 import { inspectInstallation, inspectAllInstallations } from "./tool-manager.mjs";
 import { executeNativePlan } from "./native.mjs";
 import { normalizeToolResult, failedToolLaunch } from "./tool-result.mjs";
-export { listPortfolioTools, describePortfolioTool, inspectPortfolioTool, planPortfolioFixture, runPortableGate } from "./tool-portfolio-t4.mjs";
+export { listPortfolioTools, describePortfolioTool, inspectPortfolioTool, planPortfolioFixture, runPortableGate, planPortfolioOperation, runPortfolioOperation } from "./tool-portfolio-t4.mjs";
 
 export function listTools() { return [...toolIds]; }
 export function toolDetails(tool) { return toolRuntimeProfile(tool); }
