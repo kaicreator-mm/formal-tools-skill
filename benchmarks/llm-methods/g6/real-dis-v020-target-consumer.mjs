@@ -25,6 +25,8 @@ import {inspectQualificationPreflight} from "../../../packages/runner/js/qualifi
 import {inspectDisV020Consumption, DIS_V020_REFERENCE}
   from "../../../packages/runner/js/dis-v020-consumer-preflight.mjs";
 import {buildRealLifecycleCandidate} from "../g4/real-provenance.mjs";
+import {verifyCleanOriginalGitWorktree}
+  from "../../../packages/runner/js/verified-git-worktree.mjs";
 
 const SHA40=/^[a-f0-9]{40}$/;
 const gitBlob=b=>createHash("sha1").update(Buffer.concat([
@@ -129,7 +131,9 @@ export async function runRealDisV020TargetConsumption({store_dir,formal_head,
     "must provide a POSIX store, exact formal HEAD and absolute original root");
   assert(process.platform==="linux"&&process.arch==="x64",
     "the pinned DIS v0.2 Target is linux/x64/node; refusing other platforms");
-  // Stage 1 — source-verified original SDK/KDP target (no reimplementation).
+  // Stage 1 — enforce a clean tracked original checkout: ten selected blobs
+  // alone cannot cover imported helper modules. Not an attested npm/Host root.
+  const checkoutBefore=verifyCleanOriginalGitWorktree(dis_original_root);
   const target=verifyOriginalTarget(dis_original_root);
   // Stage 2 — real pinned G3 Method/Solution candidate.
   const source=buildRealLifecycleCandidate();
@@ -196,6 +200,9 @@ export async function runRealDisV020TargetConsumption({store_dir,formal_head,
   const selected_build_test=runOriginalTest(dis_original_root,
     "examples/dis-v020-cross-project/selected-build.test.mjs",
     "selected build",9);
+  // Another check after both children catches any persistent source mutation;
+  // it cannot prove there was no concurrent swap-and-restore during execution.
+  const checkoutAfter=verifyCleanOriginalGitWorktree(dis_original_root);
   // Stage 7 — the DIS preflight envelope against the re-pinned reference for
   // the same unqualified candidate (typed refusal, no Host invocation).
   const preflight=inspectDisV020Consumption({candidate_json,
@@ -216,7 +223,8 @@ export async function runRealDisV020TargetConsumption({store_dir,formal_head,
       host_independently_attested:false,
     }),
     dis_target_reference:DIS_V020_REFERENCE,
-    original_target:target,
+    original_target:Object.freeze({...target,
+      clean_checkout_before:checkoutBefore,clean_checkout_after:checkoutAfter}),
     execution_platform:Object.freeze({node:process.version,
       platform:process.platform,architecture:process.arch,
       runtime_target:"linux/x64/node"}),

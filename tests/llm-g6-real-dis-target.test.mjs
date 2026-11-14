@@ -30,8 +30,12 @@ test("G6 real DIS target: committed receipt verifies on any checkout",()=>{
   assert.equal(r.schema,"formal-tools/i11-real-dis-v020-target-consumption/0.1");
   assert.match(r.source_head,sha40);
   assert.equal(r.driver_git_blob,r.technical_execution.driver_git_blob);
-  const driverBlob=gitBlobOf(new URL("../benchmarks/llm-methods/g6/real-dis-v020-target-consumer.mjs",import.meta.url));
-  assert.equal(driverBlob,r.driver_git_blob,"committed driver drifted from the receipted execution");
+  // This receipt is a historical REAL execution at the R16 source bytes.
+  // Never retroactively bind newly repaired driver code to the old Host run.
+  assert.equal(r.driver_git_blob,"3b8f6045247dc8819da3a85068668147d64840ad");
+  const currentDriver=gitBlobOf(new URL("../benchmarks/llm-methods/g6/real-dis-v020-target-consumer.mjs",import.meta.url));
+  assert.notEqual(currentDriver,r.driver_git_blob,
+    "R17 guarded driver cannot be mislabeled as the original R16 actual execution");
   // The re-pinned reference in the production preflight module is the exact
   // target this receipt consumed (R15 re-pin, one source of truth).
   assert.deepEqual(r.dis_target_reference,DIS_V020_REFERENCE);
