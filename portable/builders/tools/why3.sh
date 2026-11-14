@@ -20,6 +20,19 @@ ft_tool_build() {
   local d
   for d in /tmp/why3debs/*.deb; do dpkg-deb -x "$d" /tmp/why3root; done
   cp -a /tmp/why3root/. "$FT_TOOL_DIR/"
+  # Debian dependency closures contain host-directed absolute symlinks
+  # (/etc/environment, /dev/null, /usr/share/*); they must NOT enter
+  # portable tool archives. Remove links themselves, never their targets.
+  local badlink abs_removed=0
+  while IFS= read -r -d '' badlink; do
+    [ -L "$badlink" ] || ft::die "Why3 unsafe-link preflight changed"
+    rm -- "$badlink" || ft::die "Why3 unsafe absolute symlink could not be removed"
+    abs_removed=$((abs_removed+1))
+  done < <(find "$FT_TOOL_DIR" -type l -lname '/*' -print0)
+  ft::note why3_absolute_symlinks_removed "$abs_removed"
+  if [ -n "$(find "$FT_TOOL_DIR" -type l -lname '/*' -print -quit)" ]; then
+    ft::die "Why3 absolute symlinks remain after pruning"
+  fi
   [ -x "$FT_TOOL_DIR/usr/bin/why3" ] || ft::die "why3 binary missing after extraction"
   local share
   share=$(find "$FT_TOOL_DIR" -type d -name drivers | head -1 | xargs dirname)
@@ -35,12 +48,15 @@ export WHY3DATA="$TOOL_DIR/usr/share/why3"
 # Debian trixie ocaml stdlib lives in the multiarch dir; why3 resolves why3/commands under it
 export OCAMLLIB="$TOOL_DIR/usr/lib/x86_64-linux-gnu/ocaml/5.3.0:${OCAMLLIB:-}"
 export PATH="$TOOL_DIR/usr/bin:$FT_ROOT/tools/z3/bin:$PATH"
-# why3 prove spawns sub-command binaries from its compiled-in libdir (absolute Debian
-# path). Link the shipped tree there when the filesystem allows (root containers);
-# degraded mode (WHY3DATA only) otherwise — recorded as a known limitation.
-rm -rf /usr/lib/x86_64-linux-gnu/ocaml 2>/dev/null || true
-if mkdir -p /usr/lib/x86_64-linux-gnu/ocaml 2>/dev/null; then
-  ln -sfn "$TOOL_DIR/usr/lib/x86_64-linux-gnu/ocaml/5.3.0" /usr/lib/x86_64-linux-gnu/ocaml/5.3.0 2>/dev/null || true
-fi
-exec "$TOOL_DIR/usr/bin/why3" "$@"'
+# The Debian Why3 1.8.0 binary uses an absolute *compiled-in* OCaml
+# command-plugin directory. Setting WHY3LIB alone does not relocate early
+# command lookup. NEVER rm/mkdir/ln into host /usr, even when run as root.
+export WHY3LIB="$TOOL_DIR/usr/lib/x86_64-linux-gnu/ocaml/5.3.0/why3"
+case "${1:-}" in
+  --version|--print-libdir|--print-datadir)
+    exec "$TOOL_DIR/usr/bin/why3" "$@" ;;
+  *)
+    echo "WHY3_RELOCATION_NOT_QUALIFIED: proof commands require isolated root or relocatable build" >&2
+    exit 2 ;;
+esac'
 }
