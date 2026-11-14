@@ -25,7 +25,7 @@ import {inspectQualificationPreflight} from "../../../packages/runner/js/qualifi
 import {inspectDisV020Consumption, DIS_V020_REFERENCE}
   from "../../../packages/runner/js/dis-v020-consumer-preflight.mjs";
 import {buildRealLifecycleCandidate} from "../g4/real-provenance.mjs";
-import {verifyCleanOriginalGitWorktree}
+import {verifyCleanOriginalGitWorktree, verifyOriginalGitHead, sanitizedGitEnv}
   from "../../../packages/runner/js/verified-git-worktree.mjs";
 
 const SHA40=/^[a-f0-9]{40}$/;
@@ -41,11 +41,9 @@ const rawBlob=(root,rel)=>gitBlob(readFileSync(resolve(root,rel)));
  * match the re-pinned reference. No network, no build, no source edits.
  */
 function verifyOriginalTarget(root){
-  const head=spawnSync("git",["-C",root,"rev-parse","HEAD"],
-    {encoding:"utf8",timeout:15000,maxBuffer:8192});
-  assert(head.status===0&&SHA40.test(head.stdout.trim()),
-    "original target checkout has no resolvable exact HEAD");
-  const verified_head=head.stdout.trim();
+  // HEAD and worktree inspection must see the SAME repository even when
+  // ambient GIT_DIR/GIT_WORK_TREE/GIT_INDEX_FILE attempt to redirect Git.
+  const verified_head=verifyOriginalGitHead(root);
   assert(verified_head===DIS_V020_REFERENCE.source_head,
     "original target HEAD drifted from the pinned DIS reference");
   const pins={
@@ -76,7 +74,8 @@ function verifyOriginalTarget(root){
 function runOriginalTest(root,rel,label,expectPass){
   const started=Date.now();
   const run=spawnSync(process.execPath,["--import","tsx","--test",rel],
-    {cwd:root,encoding:"utf8",timeout:180000,maxBuffer:4194304});
+    {cwd:root,encoding:"utf8",timeout:180000,maxBuffer:4194304,
+      env:sanitizedGitEnv()});
   assert(!run.error,"original test spawn failed: "+String(run.error?.message??run.error));
   assert(run.status===0,label+" original chain did not exit clean");
   const tap=run.stdout;
