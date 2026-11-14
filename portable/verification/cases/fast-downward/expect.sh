@@ -7,3 +7,7 @@ EXPECT_NEG_ARGS='tests/fast-downward/domain.pddl tests/fast-downward/unsolvable.
 EXPECT_NEG_EXIT=*
 EXPECT_NEG_REGEX='([Uu]nsolvable|no solution|Completely explored)'
 EXPECT_NEG_LABEL=UNSOLVABLE
+EXPECT_ERR_ARGS='tests/fast-downward/domain.pddl tests/fast-downward/err.pddl --search "astar(lmcut())"'
+EXPECT_ERR_EXIT=*
+EXPECT_ERR_REGEX='Could not parse problem file'
+EXPECT_ERR_LABEL=INVALID_PDDL_REJECTED
