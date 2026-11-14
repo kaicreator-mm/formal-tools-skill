@@ -1,0 +1,56 @@
+{
+  "schema": "formal-tools/i24-r15-ldd-output-gate/1.0",
+  "output_label": "FORMAL_TOOLS_I24_TOOL_INTEGRATION_CONTINUE",
+  "task": "#24 T4 portable doctor false-positive repair",
+  "scope": "Follow-up P2 from independent review on already-merged PR79, implemented by the legal single Writer of PR86",
+  "source": {
+    "base_main": "06bc154913c584418692faca883a85f1840ad7df",
+    "PR": 86,
+    "branch": "fix/i24-r14-doctor-explicit-empty-failclosed",
+    "source_head_before_docs": "0aec700851fb6d15dc57ddba4199cfafa0d914df",
+    "runner_path": "portable/packaging/bundle-template/bin/tool-runner",
+    "old_runner_blob": "a27b66edf8d73c7d7dc83a58346543fee90f9257",
+    "new_runner_blob": "07582fcce82d840cf978577a032fac6cd8bcc843",
+    "new_test_path": "tests/tool-runner-ldd-report.test.mjs",
+    "new_test_git_blob": "e21dd1c6ca04cd85652f1840e1e612d0f9f2fd4f"
+  },
+  "actual_execution": {
+    "os": "Debian13 x86_64",
+    "uid": 65534,
+    "node": "22.16.0",
+    "old_runner_control": "ldd-test 4/7 PASS and 3/7 FAIL on rc0 malformed diagnostic cases",
+    "new_runner": "doctor argument 3/3 PASS + ldd output 7/7 PASS = 10/10 PASS",
+    "real_nuxmv": "nuXmv 2.2.0 candidate, actual ELF+private lib doctor exit0 and version exit0",
+    "bash_syntax": "PASS",
+    "native_solver_pos_neg_err_repeated": false
+  },
+  "contract": {
+    "failed_probe_rc_nonzero": "FAIL",
+    "empty_output": "FAIL",
+    "malformed_nonempty_rc0": "FAIL",
+    "valid_listing_plus_warning": "FAIL",
+    "missing_library": "FAIL",
+    "valid_dynamic_dependency_report": "PASS",
+    "static_exact_marker": "PASS",
+    "scope": "Recognized GNU/BusyBox dynamic linker reports; reject unknown diagnostics without granting formal T4"
+  },
+  "durable": {
+    "drive_id": "1LKl8yp-kRbJ1nyLErdzj2l0MVpT10PxQ",
+    "url": "https://drive.google.com/file/d/1LKl8yp-kRbJ1nyLErdzj2l0MVpT10PxQ/view?usp=drivesdk",
+    "file": "formal-tools-i24-r15-ldd-output-fail-closed.zip",
+    "bytes": 18499,
+    "sha256": "eb21ef928eaaccf90ff5dcc1cb7a26e37f1dd18aa3cc8843e3ca211f9723763e",
+    "entries": 17,
+    "zip_crc_pass": true,
+    "authenticated_drive_readback_length_match": true,
+    "per_member_sha256_in_manifest": true
+  },
+  "qualification": {
+    "formal_new_T4_granted": false,
+    "T5_granted": false,
+    "full_node_typescript_cli_mcp_sdk_e2e": false,
+    "exact_head_ci_pending": true,
+    "independent_source_review_pending": true,
+    "original_candidates_not_promoted": true
+  }
+}
