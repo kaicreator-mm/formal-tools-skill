@@ -131,7 +131,7 @@
         "symlinks": 0,
         "special_entries": 0,
         "path_traversal": 0,
-        "regular_bytes": 12083200
+        "regular_bytes": 12053767
       },
       "package_meta_sha256": "89c86464ede46d1555be9dc84c5ef00664d11c7a90c5f7bc5306f7e73d8b867c",
       "package_meta_version": "1.15.1",
@@ -217,10 +217,13 @@
         "p1": "PACKAGE_FILENAME_AND_META_CLAIM_24.06_BUT_ACTUAL_BINARY_REPORTS_26.6_PLUS; source commit not pinned"
       },
       "fixture_contract": {
-        "main_current": "POS/NEG only; no ERR phase",
+        "main_current": "POS/NEG/ERR (ERR added in this PR branch; not yet merged)",
         "branch": "fix/i24-fast-downward-err-fixture-r19",
         "proposed_change": "add committed malformed PDDL ERR phase, exit wildcard + parser diagnostic",
-        "err_fixture_path": "portable/verification/cases/fast-downward/err.pddl"
+        "err_fixture_path": "portable/verification/cases/fast-downward/err.pddl",
+        "expect_before_r19_blob": "6dc4077e6e62ceca0f7cca4ace2b8563efcd9f31",
+        "expect_r19_blob": "d291a8ecae4d5357470f086cef84b4ed8ade6fbd",
+        "err_pddl_blob": "f5350b2fddb807530b2c029652708af861440427"
       },
       "qualification": "POS/NEG/ERR technical execution observed, but T3 version identity/source provenance REWORK P1; no T4/T5"
     }
