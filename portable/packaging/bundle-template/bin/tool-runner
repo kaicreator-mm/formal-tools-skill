@@ -223,6 +223,68 @@ verify_one() {
 }
 
 # ---- doctor ----------------------------------------------------------------
+# Only an actual dependency table (or a header-proven static ELF) can certify
+# a healthy dependency probe. A successful ldd exit that prints an arbitrary
+# diagnostic must not be treated as "no missing libs".
+#
+# Static-ELF detection is header-based (ELF without PT_INTERP), because real
+# ldd implementations disagree on static binaries (2026-11-14 Debian 13 +
+# alpine probe, uid 65534 behaving identically to root): GNU ldd exits 1
+# printing "\tnot a dynamic executable" on stderr, musl ldso --list exits 1
+# "Not a valid dynamic program", and the busybox-style LD_TRACE_LOADED_OBJECTS
+# probe is ignored entirely (the binary silently executes, rc 0, empty output).
+# No ldd output is a trustworthy static-ELF report, so the ELF header is the
+# arbiter (x86_64 hosts with od/coreutils; big-endian or non-ELF files fall
+# back to the unchanged fail-closed ldd path below).
+ft_has_elf_magic() { # $1=file -> rc 0 when the file starts with the ELF magic
+  [ "$(od -An -N4 -t x1 -- "$1" 2>/dev/null | tr -d ' \n')" = "7f454c46" ]
+}
+ft_is_static_elf() { # $1=file -> 0 static ELF, 1 dynamic ELF, 2 not ELF/unsupported
+  local f="$1" class data phoff phent phnum i off ptype
+  [ -f "$f" ] || return 2
+  ft_has_elf_magic "$f" || return 2
+  class=$(od -An -j4 -N1 -t x1 -- "$f" 2>/dev/null | tr -d ' \n')
+  data=$(od -An -j5 -N1 -t x1 -- "$f" 2>/dev/null | tr -d ' \n')
+  case "$class$data" in ''|*[!0-9a-f]*) return 2 ;; esac
+  class=$((16#$class)); data=$((16#$data))
+  case "$class:$data" in
+    # little-endian only (bundle targets x86_64); anything else falls to ldd
+    2:1) phoff=$(od -An -j32 -N8 -t x8 -- "$f" 2>/dev/null | tr -d ' \n')
+         phent=$(od -An -j54 -N2 -t x2 -- "$f" 2>/dev/null | tr -d ' \n')
+         phnum=$(od -An -j56 -N2 -t x2 -- "$f" 2>/dev/null | tr -d ' \n') ;;
+    1:1) phoff=$(od -An -j28 -N4 -t x4 -- "$f" 2>/dev/null | tr -d ' \n')
+         phent=$(od -An -j42 -N2 -t x2 -- "$f" 2>/dev/null | tr -d ' \n')
+         phnum=$(od -An -j44 -N2 -t x2 -- "$f" 2>/dev/null | tr -d ' \n') ;;
+    *) return 2 ;;
+  esac
+  case "$phoff$phent$phnum" in
+    ''|*[!0-9a-f]*) return 2 ;; # od unreadable: fail closed into the ldd path
+  esac
+  phoff=$((16#$phoff)); phent=$((16#$phent)); phnum=$((16#$phnum))
+  [ "$phent" -gt 0 ] || return 2
+  if [ "$phnum" -eq 0 ]; then return 0; fi # no program headers: never dynamically linked
+  i=0
+  while [ "$i" -lt "$phnum" ]; do
+    off=$((phoff + i * phent))
+    ptype=$(od -An -j"$off" -N4 -t x4 -- "$f" 2>/dev/null | tr -d ' \n')
+    case "$ptype" in ''|*[!0-9a-f]*) return 2 ;; esac
+    [ "$((16#$ptype))" -eq 3 ] && return 1 # PT_INTERP found: dynamically linked
+    i=$((i + 1))
+  done
+  return 0
+}
+ft_ldd_output_valid() { # captured ldd output -> rc 0 for recognized report
+  printf '%s\n' "$1" | awk '
+    /^[[:space:]]*$/ { next }
+    /^[[:space:]]*statically linked[[:space:]]*$/ { invalid=1; next } # Static must be proven by ELF header
+    /^[[:space:]]*linux-vdso[.]so([.][[:digit:]]+)?[[:space:]]+\(0x[[:xdigit:]]+\)[[:space:]]*$/ { next } # vDSO alone is not a dependency table
+    /^[[:space:]]*[^[:space:]]+[[:space:]]+=>[[:space:]]+(\/[^[:space:]]+|not found)([[:space:]]+\(0x[[:xdigit:]]+\))?[[:space:]]*$/ { recognized++; next }
+    /^[[:space:]]*\/[^[:space:]]+[[:space:]]+\(0x[[:xdigit:]]+\)[[:space:]]*$/ { recognized++; next }
+    { invalid=1 }
+    END { if (!recognized || invalid) exit 1 }
+  '
+}
+
 doctor_one() {
   local id="$1" fails=0
   tool_meta "$id" || return 2
@@ -234,26 +296,29 @@ doctor_one() {
       # ldd without the tool lib path falsely flags ICU/libstdc++ as missing.
       local tool_lib="$FT_ROOT/tools/$id/lib"
       local miss ldd_out ldd_rc
-      if [ -d "$tool_lib" ]; then
+      if [ -d "$tool_lib" ] && ! ft_path_under "$tool_lib" "$FT_ROOT_P/tools/$id/"; then
         # Symlink containment: a private lib dir must stay inside tools/<id>/.
-        if ! ft_path_under "$tool_lib" "$FT_ROOT_P/tools/$id/"; then
-          echo "  private lib dir escapes tools/$id FAIL"; fails=1
-        else
+        # Checked for every binary, static or dynamic.
+        echo "  private lib dir escapes tools/$id FAIL"; fails=1
+      elif ft_is_static_elf "$FT_ROOT/$TOOL_MAIN_BIN"; then
+        # Static ELF: healthy without a dependency table, and ldd is not even
+        # consulted — real ldd implementations cannot certify a static binary
+        # (GNU exits 1 "not a dynamic executable"; busybox/musl trace probes
+        # are ignored and merely execute the binary).
+        echo "  ldd: static ELF OK (no PT_INTERP; ldd not consulted)"
+      else
+        if [ -d "$tool_lib" ]; then
           ldd_out=$(LD_LIBRARY_PATH="$tool_lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" ldd "$FT_ROOT/$TOOL_MAIN_BIN" 2>&1); ldd_rc=$?
+        else
+          ldd_out=$(ldd "$FT_ROOT/$TOOL_MAIN_BIN" 2>&1); ldd_rc=$?
         fi
-      else
-        ldd_out=$(ldd "$FT_ROOT/$TOOL_MAIN_BIN" 2>&1); ldd_rc=$?
-      fi
-      if [ -z "${ldd_out+x}" ]; then
-        : # lib-dir containment already failed and marked the tool; no ldd judgment
-      else
         # Fail closed: an ldd probe that did not run (nonzero rc) or produced
         # no dependency listing is never treated as "no missing libs".
         miss=$(printf '%s\n' "${ldd_out:-}" | grep -c "not found" || true)
         if [ "${miss:-0}" != 0 ]; then
           echo "  ldd missing libs: $miss FAIL"; fails=1
-        elif [ "${ldd_rc:-1}" != 0 ] || [ -z "${ldd_out:-}" ]; then
-          echo "  ldd probe FAILED (rc=${ldd_rc:-?}, no dependency listing)"; fails=1
+        elif [ "${ldd_rc:-1}" != 0 ] || [ -z "${ldd_out:-}" ] || ! ft_ldd_output_valid "$ldd_out"; then
+          echo "  ldd probe FAILED (rc=${ldd_rc:-?}, invalid or missing dependency listing)"; fails=1
         else
           echo "  ldd: no missing libs OK"
         fi
@@ -284,7 +349,15 @@ case "$cmd" in
     done
     ;;
   doctor)
-    if [ -n "${2:-}" ] && [ "$2" != all ]; then doctor_one "$2"; else
+    # No argument intentionally means doctor-all, but an explicitly empty
+    # argument is not an alias for all: it must fail closed.
+    if [ "$#" -gt 2 ]; then
+      echo "usage: tool-runner doctor [id|all]" >&2; exit 2
+    fi
+    if [ "$#" -eq 2 ] && [ -z "$2" ]; then
+      echo "invalid tool id: empty" >&2; exit 2
+    fi
+    if [ "$#" -eq 2 ] && [ "$2" != all ]; then doctor_one "$2"; else
       rc=0; for id in $(list_ids); do doctor_one "$id" || rc=1; done; exit $rc
     fi ;;
   verify)

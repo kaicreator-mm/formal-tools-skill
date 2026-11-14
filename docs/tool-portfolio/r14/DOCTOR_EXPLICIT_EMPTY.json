@@ -1,0 +1,61 @@
+{
+  "schema": "formal-tools/i24-r14-portable-doctor-contract/1.0",
+  "output_label": "FORMAL_TOOLS_I24_TOOL_INTEGRATION_CONTINUE",
+  "source": {
+    "branch": "fix/i24-r14-doctor-explicit-empty-failclosed",
+    "base_main": "06bc154913c584418692faca883a85f1840ad7df",
+    "head_before_docs": "4bc11d8064eb35947701215a8e8b33f246aad48a",
+    "runner_path": "portable/packaging/bundle-template/bin/tool-runner",
+    "runner_blob": "a27b66edf8d73c7d7dc83a58346543fee90f9257",
+    "metadata_test_blob": "bb8705d5f61717ee9939ba9069cd97a19e591ff2"
+  },
+  "resolved_p2": {
+    "problem": "Explicit empty `doctor \"\"` previously aliased `doctor all` and could falsely return rc=0",
+    "resolution": "No arguments retains doctor-all, explicit empty id returns rc=2, extra arguments return rc=2; unknown id returns rc=2",
+    "effect_on_existing_original_13_and_candidate_23": "NO_CHANGE_TO_NORMAL_NONEMPTY_TOOL_IDS"
+  },
+  "native": {
+    "tool": "nuxmv",
+    "version": "2.2.0",
+    "candidate_sha256": "2d7b2f0037a043c35616198e2ee916a88d48e3abf54b99e6709c911a78b2b777",
+    "strict_fixture_blob": "24e670e3420afa61c800396d5b5154b8bd1a3898",
+    "host": "Debian13 x86_64, nonroot UID/GID 65534; original solver library and candidate corrected meta",
+    "doctor_exit": 0,
+    "version_exit": 0,
+    "verify_exit": 0,
+    "phase_exit_codes": {
+      "pos": 0,
+      "neg": 0,
+      "err": 1
+    },
+    "runner_receipt_sha256": "37c72d787fd2321f30828d17b8a1271dc683cfc0ba53fc926fd13d68906b2b7e",
+    "scope": "REAL_NONROOT_BUNDLE_TECHNICAL_T3_T4_PATH_NOT_FORMAL_T4"
+  },
+  "tests": {
+    "node_cases": "3/3 PASS under UID65534",
+    "shell_syntax": "PASS",
+    "tests_file": "tests/tool-runner-doctor-args.test.mjs",
+    "no_redundant_native": "Only nuXmv replayed for changed Runner dispatch; unrelated R3/R4 raw Native receipts reused"
+  },
+  "raw_evidence": {
+    "drive_file_id": "1Kbv4nMoEGDAXV_b7RxGPlm-CtrAOl_wI",
+    "url": "https://drive.google.com/file/d/1Kbv4nMoEGDAXV_b7RxGPlm-CtrAOl_wI/view?usp=drivesdk",
+    "file_name": "formal-tools-i24-r14-doctor-native-receipts.zip",
+    "bytes": 13643,
+    "sha256": "2336829a2c09698060a0e0769cc928e1eec61e5562965bd89a78118692df7b86",
+    "zip_entries": 22,
+    "crc_pass": true,
+    "authenticated_drive_readback_bytes_match": true,
+    "per_entry_sha256_manifest": "R14_RECEIPTS.json"
+  },
+  "qualification": {
+    "original_13_native_t4_scope_unmodified": true,
+    "new_candidate_formal_t4_accepted": false,
+    "semantic_t5": false,
+    "full_host_cli_mcp_sdk_e2e": false,
+    "candidate_not_official_release": true,
+    "independent_source_review_required": true,
+    "woodpecker_same_sha_required": true,
+    "no_7_or_14_reopen": true
+  }
+}
