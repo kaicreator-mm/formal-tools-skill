@@ -34,8 +34,8 @@ const unhealthy=/ldd (?:probe FAILED|missing libs: 1 FAIL)[\s\S]*verdict: FAIL/;
 test('ldd real dynamic-loader report with addresses remains healthy',{skip:!isLinux},()=>{
   doctorWithLdd("printf '%s\\n' '  linux-vdso.so.1 (0x00007fff1234)' '  libstdc++.so.6 => /usr/lib/libstdc++.so.6 (0x00007fffbeef)' '  /lib64/ld-linux-x86-64.so.2 (0x00007fffabcd)'",0,healthy);
 });
-test('ldd explicitly static ELF report is accepted',{skip:!isLinux},()=>{
-  doctorWithLdd("echo '  statically linked'",0,healthy);
+test('unverified ldd static marker on a non-ELF cannot claim a static executable',{skip:!isLinux},()=>{
+  doctorWithLdd("echo '  statically linked'; exit 0",1,unhealthy);
 });
 test('ldd rc0 with malformed diagnostic fails closed',{skip:!isLinux},()=>{
   doctorWithLdd("echo 'ldd: synthetic diagnostic, no dependency table emitted'; exit 0",1,unhealthy);
@@ -141,4 +141,9 @@ test('real gcc dynamic ELF passes doctor via real system ldd dependency table',{
   try {
     doctorWithRealBin(out,0,/ldd: no missing libs OK[\s\S]*verdict: OK/);
   } finally { rmSync(dir,{recursive:true,force:true}); }
+});
+
+// A lone virtual DSO address never proves the presence of the real loader or libraries.
+test('vDSO-only ldd success cannot pass doctor',{skip:!isLinux},()=>{
+  doctorWithLdd("echo 'linux-vdso.so.1 (0x00007fff1234)'; exit 0",1,unhealthy);
 });
