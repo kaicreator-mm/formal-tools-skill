@@ -1,0 +1,235 @@
+{
+  "schema": "formal-tools/i24-r19-native-tool-evidence/1.0",
+  "output_label": "FORMAL_TOOLS_I24_TOOL_INTEGRATION_CONTINUE",
+  "recorded_at": "2026-11-15",
+  "baseline": {
+    "repository": "kaicreator-mm/formal-tools",
+    "main_before_r19": "093db03a3b9e0d59b107cf5d45502389f00f7fd4",
+    "r18_ledger": "docs/tool-portfolio/r18/I24_T4_36_TOOL_CHECKPOINT.json",
+    "r18_ledger_blob": "142a2c1c11d3ed84b1505e866c2eba3cd5617208",
+    "main_ci": {
+      "woodpecker": 863,
+      "state": "SUCCESS"
+    },
+    "source_pr22": {
+      "state": "MERGED",
+      "actual_head": "8aa994718895bcf49988981b41d391f624075602",
+      "merge_commit": "eff58e166de2b9ae71470f0ea35da92ce493c19d",
+      "user_supplied_expected_head_is_historical": "15aad39c23a6218c4adc0e07e5891e893f9b1d03"
+    },
+    "shared_t4_pr69": {
+      "state": "MERGED",
+      "merge_commit": "12032f1d5a759dca5a1b24eedbefae2dfe01d3e0"
+    },
+    "shared_runner_pr86": {
+      "state": "OPEN_REWORK",
+      "head": "b9e4e419e1a144c7cb1e3b8e6ccee74d50d66871",
+      "finding": "P1: no-PT_INTERP incorrectly treats ET_REL and ET_DYN with DT_NEEDED missing dependency as static",
+      "not_in_main": true
+    }
+  },
+  "host": {
+    "os": "Debian GNU/Linux 13 (trixie)",
+    "arch": "x86_64",
+    "kernel": "6.18.57",
+    "system_python": "3.13.5",
+    "alternate_host_python": "3.13.5",
+    "node": "22.16.0",
+    "native_execution_uid_gid": "65534:65534",
+    "privilege": "all three tool executions non-root",
+    "caveat": "Host Python 3.13.5 substituted for unavailable canonical 294,346,075-byte shared Python runtime; this does not qualify a self-contained portable runtime or full Runner T4."
+  },
+  "existing_counts_unchanged": {
+    "registered_tools": 36,
+    "tool_issues": "25-60",
+    "original_tar_runner_t3_scoped": 19,
+    "callable_with_alternate_scopes": 34,
+    "original_native_adapters": 13,
+    "original_typed_operations": 53,
+    "candidate_cli_routes": 23,
+    "candidate_mcp_methods": 3,
+    "candidate_sdk_exports": 5,
+    "candidate_full_t4_accepted": 0,
+    "candidate_t5_business_semantics_accepted": 0,
+    "t6_final_acceptance": 0
+  },
+  "r19_delta_counts": {
+    "tools_rechecked_from_original_archives": 3,
+    "scoped_original_payload_host_native_pos_neg_err_technical_pass": 2,
+    "version_identity_rework_p1": 1
+  },
+  "tools": {
+    "lean4": {
+      "issue": 41,
+      "declared_version": "4.35.0",
+      "original_drive_parts": [
+        134217728,
+        134217728,
+        134217728,
+        134217728,
+        30316953
+      ],
+      "reassembled_size": 567187865,
+      "original_manifest_sha256": "671b172f8dacc4a7fd405852a2286e7657ec8c4414d301a73ece6f98f39bde62",
+      "zstd_test": "PASS",
+      "decompressed_size": 3152281600,
+      "tar": {
+        "entries": 18574,
+        "regular_files": 17928,
+        "directories": 633,
+        "relative_confined_symlinks": 13,
+        "special_entries": 0,
+        "path_traversal": 0,
+        "absolute_symlinks": 0,
+        "escaping_symlinks": 0,
+        "regular_bytes": 3137938943
+      },
+      "extraction": "non-root UID/GID 65534; tar --no-same-owner --no-same-permissions after full preflight",
+      "binary_sha256": "bf8d54e4714cc4b03d3f6bb34c83b7202b87e49c8bfcbff6895c085bb90ceb38",
+      "lake_sha256": "8ba83c98f76562d03b8dbc33f1057151ba6cbb121679dde76b2260ccc90495e1",
+      "exact_committed_fixture_blobs": {
+        "pos": "50c9e5be4159f2b2dc768312e9a2b7d33aa7a477",
+        "neg": "774778dd084d25e0404bb29debf3328353245e93",
+        "err": "04bafaf5a9e906deed6ac10200a70a349697591f"
+      },
+      "cases": {
+        "pos": {
+          "exit": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "meaning": "one_plus_one rfl proved"
+        },
+        "neg": {
+          "exit": 1,
+          "stdout_sha256": "d99c6f5d0545bc8ee027910d0001fd6bdfb29575454bdf706019bb0e234f4bf5",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "meaning": "1+1=3 rejected by definitional equality/type mismatch"
+        },
+        "err": {
+          "exit": 1,
+          "stdout_sha256": "c5c6b461c3faa4f53688d7774cd8a755cd721c61adc2d8f4da048a40ea51372c",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "meaning": "unknown identifier no_such_tactic rejected"
+        },
+        "lake_version": {
+          "exit": 0,
+          "stdout": "Lake version 5.0.0-src+eb6cafb (Lean version 4.35.0)"
+        }
+      },
+      "qualification": "SCOPED_ORIGINAL_ARCHIVE_NATIVE_POS_NEG_ERR_PASS; not original tool-runner/portable shared runtime T4, not independent semantic T5 or Release"
+    },
+    "highs": {
+      "issue": 38,
+      "declared_version": "1.15.1",
+      "original_archive_sha256": "ea0a12198f986f9fd03c7a29525d7f93c64e39c51525492bf3fc37e0bc7815a2",
+      "zstd_test": "PASS",
+      "decompressed_size": 12083200,
+      "tar": {
+        "entries": 30,
+        "regular_files": 23,
+        "directories": 7,
+        "symlinks": 0,
+        "special_entries": 0,
+        "path_traversal": 0,
+        "regular_bytes": 12083200
+      },
+      "package_meta_sha256": "89c86464ede46d1555be9dc84c5ef00664d11c7a90c5f7bc5306f7e73d8b867c",
+      "package_meta_version": "1.15.1",
+      "dist_info_version": "1.15.1",
+      "exact_fixture_blobs": {
+        "pos": "597f301878400b717e5236a18f8abdab27ff8876",
+        "neg": "ec5a298fb915998d8862d9a257785bea7b6b2f22",
+        "err": "ddd55369695631af0fbbbbf384b79cec347a53f7"
+      },
+      "execution": "original package tools/highs/run shim; isolated host Python 3.13.5 system runtime skeleton and system NumPy 2.2.4; UID/GID 65534",
+      "cases": {
+        "pos": {
+          "exit": 0,
+          "stdout": "PYVERIFY: OK OPTIMAL obj=4.000",
+          "stdout_sha256": "75cb560557e8e6f75cee04400fee60ce1502e70255b55539ea3c9ebeb1071afc",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "neg": {
+          "exit": 0,
+          "stdout": "PYVERIFY: OK INFEASIBLE",
+          "stdout_sha256": "5e2f4119214a920601c4b2ade367fccbeee695be006224f1af78a4a369c901dd",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "err": {
+          "exit": 3,
+          "stdout": "HIGHS_INPUT_REJECTED status=kError",
+          "stdout_sha256": "48906862b9eb901718b7b347a2e70332ad2c3f69b2b70f53aa3f4fc3fdf024ce",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "separate_wheelhouse_asset": {
+        "drive_name": "highspy-whl-1.15.1-cp313-cp313-manylinux_2_39_x86_64.zip",
+        "outer_sha256": "a67913c95322957bfcaf6c0e9ff9f1dba8f99a2bd0be27d0ce80119feb45f620",
+        "embedded_highspy_version": "1.16.0",
+        "embedded_numpy_version": "2.5.4",
+        "internal_manifest": "2/2 SHA256 entries PASS",
+        "disposition": "DO_NOT_USE_AS_1.15.1; original tool tar is correctly versioned 1.15.1"
+      },
+      "qualification": "SCOPED_ORIGINAL_ARCHIVE_PYTHON_LIBRARY_POS_NEG_ERR_PASS; shared canonical Python runtime not fetched; no full Runner T4/MCP/SDK E2E or T5"
+    },
+    "fast_downward": {
+      "issue": 37,
+      "expected_version": "24.06",
+      "original_archive_sha256": "909f427d559965709adf9725899a3512f3c81ca88d0cae17619412cd810de503",
+      "zstd_test": "PASS",
+      "decompressed_size": 687554560,
+      "tar": {
+        "entries": 1177,
+        "regular_files": 1109,
+        "directories": 68,
+        "symlinks": 0,
+        "special_entries": 0,
+        "path_traversal": 0,
+        "regular_bytes": 686303961
+      },
+      "host_python": "3.13.5",
+      "execution": "original tools/fast-downward/run shim with host Python 3.13.5 symlink; UID/GID 65534",
+      "cases": {
+        "pos": {
+          "exit": 0,
+          "meaning": "solution found, plan length 2, plan cost 2",
+          "stdout_sha256": "3edc20c71af65c6d554147b36e5a01d23d5863f649c27767c50d50e4e8eb71a0"
+        },
+        "neg": {
+          "exit": 11,
+          "meaning": "Task is provably unsolvable",
+          "stdout_sha256": "2fc5e4086d9cc62254f96977a1f9d377470cb653c27cfaa82d8c93cdb4a86032"
+        },
+        "err": {
+          "exit": 31,
+          "meaning": "Could not parse malformed PDDL problem",
+          "stdout_sha256": "ab7b130064b0a4ff0d01eef99c96c805c131408c3bf19a7af1db73a5f0f97df8"
+        }
+      },
+      "version_identity": {
+        "meta_json_version": "24.06",
+        "meta_sh_version": "24.06",
+        "actual_run_version": "26.6+",
+        "official_release_notes_inside_package": "Fast Downward 26.6 (released 2026-09-10)",
+        "version_py": "__version__ = 26.6+",
+        "git_revision_header": "unknown",
+        "meta_version_output": "ModuleNotFoundError: No module named driver (builder probe captured broken import context)",
+        "p1": "PACKAGE_FILENAME_AND_META_CLAIM_24.06_BUT_ACTUAL_BINARY_REPORTS_26.6_PLUS; source commit not pinned"
+      },
+      "fixture_contract": {
+        "main_current": "POS/NEG only; no ERR phase",
+        "branch": "fix/i24-fast-downward-err-fixture-r19",
+        "proposed_change": "add committed malformed PDDL ERR phase, exit wildcard + parser diagnostic",
+        "err_fixture_path": "portable/verification/cases/fast-downward/err.pddl"
+      },
+      "qualification": "POS/NEG/ERR technical execution observed, but T3 version identity/source provenance REWORK P1; no T4/T5"
+    }
+  },
+  "next": {
+    "fast_downward_version": "obtain exact upstream source tag/commit or rebuild actual 24.06; update package/catalog only with provenance",
+    "fast_downward_error_fixture": "PR branch adds committed ERR fixture; require exact-SHA CI and independent review",
+    "highs": "reuse exact 1.15.1 original tar evidence; separate 1.16.0 wheelhouse must be renamed/reclassified or removed from 1.15.1 lane",
+    "lean4": "retain scoped native result; next integration step is actual official portable Runner with canonical Python/Lean runtime and independent source review",
+    "shared_runner": "PR #86 P1 must be fixed by original single Writer; no concurrent edit"
+  }
+}
