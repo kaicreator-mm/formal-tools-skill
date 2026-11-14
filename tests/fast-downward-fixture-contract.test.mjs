@@ -21,5 +21,7 @@ test("Fast Downward portable fixture requires POS, NEG and malformed-PDDL ERR ph
   assert.equal(field("EXPECT_ERR_EXIT"),"*");
   assert.match(field("EXPECT_ERR_REGEX"),/Could not parse problem file/);
   assert.match(field("EXPECT_ERR_LABEL"),/INVALID_PDDL_REJECTED/);
-  const opens=(malformed.match(/\\(/g)||[]).length;\n  const closes=(malformed.match(/\\)/g)||[]).length;\n  assert.ok(opens>closes,"ERR input must remain syntactically malformed");
+  const opens=(malformed.match(/\(/g)||[]).length;
+  const closes=(malformed.match(/\)/g)||[]).length;
+  assert.ok(opens>closes,"ERR input must remain syntactically malformed");
 });
