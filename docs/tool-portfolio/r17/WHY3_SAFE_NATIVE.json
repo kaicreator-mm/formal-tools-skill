@@ -1,0 +1,126 @@
+{
+  "schema": "formal-tools/i24-r17-why3-safe-native/1.0",
+  "output_label": "FORMAL_TOOLS_I24_TOOL_INTEGRATION_CONTINUE",
+  "source": {
+    "repo": "kaicreator-mm/formal-tools",
+    "main_issue": 24,
+    "tool_issue": 59,
+    "branch": "fix/i24-why3-safe-host-isolation-r17",
+    "head_before_docs": "020ccde1f823f635b25c246e85e5641f6adc0012",
+    "source_path": "portable/builders/tools/why3.sh",
+    "original_blob": "7edc977f0d60ad9f20044bc9893526e2fbbb72ab",
+    "fixed_blob": "a955cd5169e42495b46a3b52b245307f98774bb2",
+    "test_path": "tests/why3-portable-safety.test.mjs",
+    "candidate_shim_generated_by_staging": true
+  },
+  "P0": {
+    "original_run": "rm -rf /usr/lib/x86_64-linux-gnu/ocaml followed by mkdir and ln in global /usr",
+    "original_root_execution_prohibited": true,
+    "original_run_never_executed": true,
+    "source_fix": "Remove global path writes, strip absolute symlinks during source build, fail closed on unrelocated Why3 command-plugin operations",
+    "residual": "Original delivered tar still contains unsafe run script and 27 host-absolute symlinks; NOT REPLACED"
+  },
+  "original": {
+    "file": "why3-1.8.0-linux-x86_64.tar.zst",
+    "sha256": "5343afcbccd2805dbf9c1ff7689371ced7857a42d0f57615d22e9bee701ff8f3",
+    "bytes": 41550468,
+    "canonical_manifest_sha256_stale": "6a0e3cc7a3664529ed9573613359bb0e9019d2dd38ffd521a6b4251dcf5802d1",
+    "zstd_test": "PASS",
+    "members": 5346,
+    "regular": 3681,
+    "dirs": 1350,
+    "symlinks": 315,
+    "unsafe_absolute_symlinks": 27
+  },
+  "candidate": {
+    "name": "why3-1.8.0-sanitized-safe-only-CANDIDATE.tar.zst",
+    "sha256": "62a16b57fd90ed6fdded53c34ddeeddbd375e05d0eb6ab905b4ee82715ce6ed2",
+    "bytes": 54709487,
+    "drive_id": "1HwD8zM9uayJkGtpDuKZL9hdNdzVXo6Sb",
+    "url": "https://drive.google.com/file/d/1HwD8zM9uayJkGtpDuKZL9hdNdzVXo6Sb/view?usp=drivesdk",
+    "members": 5319,
+    "regular": 3681,
+    "regular_content_unchanged": 3680,
+    "regular_content_modified": [
+      "tools/why3/run"
+    ],
+    "absolute_symlinks_dropped": 27,
+    "safe_relative_symlinks_retained": 288,
+    "archive_all_entries_mtime_changed": 5319,
+    "archive_all_entries_uid_gid_changed": 0,
+    "packaging": "manually staged deterministic --sort=name --mtime=@0 --owner=0 --group=0 --numeric-owner; zstd -5",
+    "safe_zstd_test": true,
+    "safe_preflight": true,
+    "sha_after_drive_readback_verified": true,
+    "canonical_replacement": false,
+    "official_rebuilt_release": false
+  },
+  "Z3": {
+    "version": "5.4.0",
+    "sha256": "039d3f8c75e92ceb196bb1291d8602340541f1b1be2f0a1acf32d3c025f8ed16",
+    "canonical_manifest_match": true,
+    "archive_member_count": 6,
+    "nonroot_native_version_exit": 0,
+    "Why3_detector_status": "3 provers added but version 5.4.0 is unrecognized by Why3 1.8.0 rules, which enumerate Z3 <=4.13"
+  },
+  "host": {
+    "os": "Debian13 x86_64",
+    "tool_execution_user": "UID/GID 65534",
+    "unsafe_original_run_executed": false,
+    "host_ocaml_libdir_modified": false,
+    "portable_safe_candidate": {
+      "version_exit": 0,
+      "config_detect_exit": 2,
+      "prove_exit": 2,
+      "rejection": "WHY3_RELOCATION_NOT_QUALIFIED"
+    },
+    "private_chroot": {
+      "source": "sanitized original bundle, not official release",
+      "host_libraries_copied_into_private_root": true,
+      "private_chroot_nonhermetic": true,
+      "dev_null": "regular placeholder (not real device)",
+      "config_detect_exit": 0,
+      "pos": {
+        "model": "1+1=2",
+        "exit": 0,
+        "tool_output": "Valid"
+      },
+      "neg": {
+        "model": "1+1=3",
+        "exit": 2,
+        "tool_output": "Unknown (sat)"
+      },
+      "err": {
+        "model": "invalid WhyML",
+        "exit": 1,
+        "tool_output": "syntax error"
+      }
+    }
+  },
+  "receipts": {
+    "zip_name": "formal-tools-i24-r17-why3-safe-native-evidence.zip",
+    "drive_id": "1DSUlyhSoUhsWXIjCbgsEcHf9p-zV2AWd",
+    "url": "https://drive.google.com/file/d/1DSUlyhSoUhsWXIjCbgsEcHf9p-zV2AWd/view?usp=drivesdk",
+    "bytes": 9683,
+    "sha256": "c5269fed620d62e56ff3eac05a4faf0b58bba73a8bddb15b736190efa783405e",
+    "zip_members": 27,
+    "crc_pass": true,
+    "authenticated_drive_readback": true,
+    "raw_stdout_stderr_included": true,
+    "safe_unpack_preflight_json": true,
+    "original_vs_candidate_content_diff_json": true
+  },
+  "qualification": {
+    "T0": "original source hash verified but canonical SHA manifest is stale",
+    "T1": "candidate safe staging only; reproducible official build not accepted",
+    "T2": "candidate isolated nonroot safe extraction and version scoped",
+    "T3": "nonhermetic private chroot POS/NEG/ERR observed, no independent semantic admission",
+    "T4": "NOT_QUALIFIED",
+    "T5": "NOT_QUALIFIED",
+    "T6": "OPEN",
+    "independent_nonWriter_source_review": "PENDING",
+    "source_exact_head_CI": "PENDING",
+    "do_not_reopen_7_14": true
+  },
+  "safety_warning": "Never execute the original package run as privileged user. Do not promote candidate to App/packages without independent package review and signed canonical manifest update."
+}
