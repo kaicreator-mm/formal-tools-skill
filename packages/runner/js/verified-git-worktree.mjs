@@ -9,12 +9,12 @@ import {realpathSync} from 'node:fs';
 import {isAbsolute,resolve} from 'node:path';
 
 const fail=code=>{throw Object.assign(new Error(code),{code})};
-const safeEnv=()=>Object.fromEntries(Object.entries(process.env).filter(([k])=>
+export const sanitizedGitEnv=()=>Object.fromEntries(Object.entries(process.env).filter(([k])=>
   !k.startsWith('GIT_')));
 const git=(root,args)=>{
   const r=spawnSync('git',['--no-optional-locks','-C',root,
     '-c','core.fsmonitor=false','-c','core.ignorestat=false',...args],{
-    encoding:'utf8',timeout:30000,maxBuffer:64*1024*1024,env:safeEnv()
+    encoding:'utf8',timeout:30000,maxBuffer:64*1024*1024,env:sanitizedGitEnv()
   });
   if(r.error||r.status!==0||r.signal||typeof r.stdout!=='string'||r.stderr?.includes('fatal:'))
     fail('DIS_ORIGINAL_GIT_INSPECTION_FAILED');
@@ -63,4 +63,13 @@ export function verifyCleanOriginalGitWorktree(root){
     ignored_dependencies_independently_attested:false,
     ignored_generated_outputs_independently_attested:false,
     race_free_execution_attested:false});
+}
+
+/** Use the same sanitized Git environment for HEAD as for worktree status. */
+export function verifyOriginalGitHead(root){
+  if(typeof root!=='string'||!isAbsolute(root))fail('DIS_ORIGINAL_ROOT_INVALID');
+  let canonical;try{canonical=realpathSync(root)}catch{fail('DIS_ORIGINAL_ROOT_INVALID')}
+  const head=git(canonical,['rev-parse','HEAD']).trim();
+  if(!/^[a-f0-9]{40}$/.test(head))fail('DIS_ORIGINAL_HEAD_INVALID');
+  return head;
 }
