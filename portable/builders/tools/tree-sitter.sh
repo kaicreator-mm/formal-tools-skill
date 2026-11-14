@@ -38,9 +38,19 @@ ft_tool_build() {
   ft::note ts_grammar_cache "$(find "$FT_OUT/runtimes/py-cache" -name '*.so' | wc -l) grammars"
   ft::make_shim 'export PYTHONHOME="$FT_ROOT/runtimes/python313" PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1
 export LD_LIBRARY_PATH="$FT_ROOT/runtimes/python313/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
-export XDG_CACHE_HOME="$FT_ROOT/runtimes/py-cache"
 case "$1" in
-  --py) shift; exec "$FT_ROOT/runtimes/python313/bin/python3.13" -s "$@" ;;
-  *) exec "$TOOL_DIR/bin/tree-sitter" "$@" ;;
+  --py)
+    export XDG_CACHE_HOME="$FT_ROOT/runtimes/py-cache"
+    shift; exec "$FT_ROOT/runtimes/python313/bin/python3.13" -s "$@" ;;
+  *)
+    # CLI parser build writes to XDG cache. The installed portable bundle is
+    # read-only, so redirect to the Runner invocation cache when available.
+    if [ -n "${FT_TMP:-}" ]; then
+      export XDG_CACHE_HOME="$FT_TMP/tree-sitter-cache"
+    elif [ -z "${XDG_CACHE_HOME:-}" ]; then
+      export XDG_CACHE_HOME="${HOME:-/tmp}/.cache"
+    fi
+    mkdir -p "$XDG_CACHE_HOME" || exit 2
+    exec "$TOOL_DIR/bin/tree-sitter" "$@" ;;
 esac'
 }
