@@ -223,6 +223,21 @@ verify_one() {
 }
 
 # ---- doctor ----------------------------------------------------------------
+# Only an actual dependency table (or the exact static ELF marker) can
+# certify a healthy dependency probe. A successful ldd exit that prints an
+# arbitrary diagnostic must not be treated as "no missing libs".
+ft_ldd_output_valid() { # captured ldd output -> rc 0 for recognized report
+  printf '%s\n' "$1" | awk '
+    /^[[:space:]]*$/ { next }
+    /^[[:space:]]*statically linked[[:space:]]*$/ { recognized++; next }
+    /^[[:space:]]*linux-vdso[.]so([.][[:digit:]]+)?[[:space:]]+\(0x[[:xdigit:]]+\)[[:space:]]*$/ { recognized++; next }
+    /^[[:space:]]*[^[:space:]]+[[:space:]]+=>[[:space:]]+(\/[^[:space:]]+|not found)([[:space:]]+\(0x[[:xdigit:]]+\))?[[:space:]]*$/ { recognized++; next }
+    /^[[:space:]]*\/[^[:space:]]+[[:space:]]+\(0x[[:xdigit:]]+\)[[:space:]]*$/ { recognized++; next }
+    { invalid=1 }
+    END { if (!recognized || invalid) exit 1 }
+  '
+}
+
 doctor_one() {
   local id="$1" fails=0
   tool_meta "$id" || return 2
@@ -252,8 +267,8 @@ doctor_one() {
         miss=$(printf '%s\n' "${ldd_out:-}" | grep -c "not found" || true)
         if [ "${miss:-0}" != 0 ]; then
           echo "  ldd missing libs: $miss FAIL"; fails=1
-        elif [ "${ldd_rc:-1}" != 0 ] || [ -z "${ldd_out:-}" ]; then
-          echo "  ldd probe FAILED (rc=${ldd_rc:-?}, no dependency listing)"; fails=1
+        elif [ "${ldd_rc:-1}" != 0 ] || [ -z "${ldd_out:-}" ] || ! ft_ldd_output_valid "$ldd_out"; then
+          echo "  ldd probe FAILED (rc=${ldd_rc:-?}, invalid or missing dependency listing)"; fails=1
         else
           echo "  ldd: no missing libs OK"
         fi
